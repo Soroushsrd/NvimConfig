@@ -411,6 +411,7 @@ require('lazy').setup({
   -- See `:help gitsigns` to understand what the configuration keys do
   { -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
+    event = { 'BufReadPre', 'BufNewFile' },
     opts = {
       signs = {
         add = { text = '+' },
@@ -438,7 +439,7 @@ require('lazy').setup({
 
   { -- Useful plugin to show you pending keybinds.
     'folke/which-key.nvim',
-    event = 'VimEnter', -- Sets the loading event to 'VimEnter'
+    event = 'VeryLazy',
     opts = {
       icons = {
         -- set icon mappings to true if you have a Nerd Font
@@ -510,6 +511,7 @@ require('lazy').setup({
         -- This is only run then, not every time Neovim starts up.
         build = 'make',
 
+        load = 'lazy',
         -- `cond` is a condition used to determine whether this plugin should be
         -- installed and loaded.
         cond = function()
@@ -619,6 +621,8 @@ require('lazy').setup({
   {
     -- Main LSP Configuration
     'neovim/nvim-lspconfig',
+    event = { 'BufReadPost', 'BufNewFile' },
+
     dependencies = {
       -- Automatically install LSPs and related tools to stdpath for Neovim
       { 'williamboman/mason.nvim', config = true }, -- NOTE: Must be loaded before dependants
@@ -1057,7 +1061,7 @@ require('lazy').setup({
     end,
   },
   -- Highlight todo, notes, etc in comments
-  { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
+  { 'folke/todo-comments.nvim', event = { 'BufReadPost', 'BufNewFile' }, dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
 
   { -- Collection of various small independent plugins/modules
     'echasnovski/mini.nvim',
@@ -1098,6 +1102,14 @@ require('lazy').setup({
   },
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
+    event = { 'BufReadPost', 'BufNewFile' },
+    cmd = {
+      'TSInstall',
+      'TSBufEnable',
+      'TSBufDisable',
+      'TSBufToggle',
+      'TSModuleInfo',
+    },
     build = ':TSUpdate',
     main = 'nvim-treesitter.configs', -- Sets main module to use for opts
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`

@@ -2,6 +2,18 @@ return {
   {
     'Civitasv/cmake-tools.nvim',
     dependencies = 'nvim-lua/plenary.nvim',
+
+    ft = { 'cpp', 'c', 'h', 'hpp', 'cmake' },
+
+    cmd = {
+      'CMakeGenerate',
+      'CMakeBuild',
+      'CMakeRun',
+      'CMakeDebug',
+      'CMakeSelectBuildTarget',
+      'CMakeOpen',
+      'CMakeClose',
+    },
     opts = {
       cmake_command = 'cmake', -- CMake executable
       cmake_build_directory = 'build', -- Default build directory

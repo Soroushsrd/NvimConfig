@@ -15,23 +15,23 @@
 --     -- vim.cmd [[highlight Normal guibg=#1a1b26ee]]
 --   end,
 -- }
-return {
-  'tiagovla/tokyodark.nvim',
-  opts = {
-    -- custom options here
-  },
-  config = function(_, opts)
-    require('tokyodark').setup(opts) -- calling setup is optional
-    vim.cmd [[colorscheme tokyodark]]
-  end,
-}
--- {
+-- return {
+--   'tiagovla/tokyodark.nvim',
+--   opts = {
+--     -- custom options here
+--   },
+--   config = function(_, opts)
+--     require('tokyodark').setup(opts) -- calling setup is optional
+--     vim.cmd [[colorscheme tokyodark]]
+--   end,
+-- }
+-- return {
 --   'miikanissi/modus-themes.nvim',
 --   lazy = true,
 --   opts = {
 --     variant = 'tinted',
 --   },
--- },
+-- }
 -- return { -- You can easily change to a different colorscheme.
 -- Change the name of the colorscheme plugin below, and then
 -- change the command in the config to whatever the name of that colorscheme is.
@@ -48,7 +48,16 @@ return {
 --     vim.cmd.hi 'Comment gui=none'
 --   end,
 -- }
--- {
+return {
+  {
+    'yorumicolors/yorumi.nvim',
+    priority = 1000,
+    config = function()
+      vim.cmd.colorscheme 'yorumi'
+    end,
+  },
+}
+-- return {
 --   'shaunsingh/nord.nvim',
 --   priority = 1000,
 --   init = function()
@@ -99,4 +108,4 @@ return {
 --       vim.api.nvim_set_hl(0, group, colors)
 --     end
 --   end,
--- },
+-- }
