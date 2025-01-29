@@ -83,7 +83,32 @@ I hope you enjoy your Neovim journey,
 
 P.S. You can delete this when you're done too. It's your config now! :)
 --]]
+vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
+  pattern = { '*/leetcode/*.rs' },
+  callback = function(ev)
+    vim.bo[ev.buf].filetype = 'rust'
 
+    -- Give a short delay to ensure the buffer is properly loaded
+    vim.defer_fn(function()
+      if vim.api.nvim_buf_is_valid(ev.buf) then
+        -- Check if rust-analyzer is already attached
+        local clients = vim.lsp.get_active_clients { bufnr = ev.buf }
+        local is_attached = false
+        for _, client in pairs(clients) do
+          if client.name == 'rust_analyzer' then
+            is_attached = true
+            break
+          end
+        end
+
+        -- Only start if not already attached
+        if not is_attached then
+          vim.cmd.LspStart 'rust_analyzer'
+        end
+      end
+    end, 100)
+  end,
+})
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
@@ -826,8 +851,18 @@ require('lazy').setup({
           single_file_support = true,
         },
         rust_analyzer = {
+          single_file_support = true,
           auto_attach = true,
           settings = {
+            checkOnSave = {
+              command = 'check',
+            },
+            diagnostics = {
+              enable = true,
+              experimental = {
+                enable = true,
+              },
+            },
             inlayHints = {
               enable = true,
               typeHints = true,
@@ -841,6 +876,16 @@ require('lazy').setup({
             },
             procMacro = {
               enable = true,
+            },
+          },
+        },
+        zls = {
+          settings = {
+            zls = {
+              enable_inlay_hints = true,
+              inlay_hints_show_builtin = true,
+              semantic_tokens = 'full',
+              enable_semantic_tokens = true,
             },
           },
         },
