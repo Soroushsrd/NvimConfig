@@ -83,32 +83,7 @@ I hope you enjoy your Neovim journey,
 
 P.S. You can delete this when you're done too. It's your config now! :)
 --]]
-vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
-  pattern = { '*/leetcode/*.rs' },
-  callback = function(ev)
-    vim.bo[ev.buf].filetype = 'rust'
 
-    -- Give a short delay to ensure the buffer is properly loaded
-    vim.defer_fn(function()
-      if vim.api.nvim_buf_is_valid(ev.buf) then
-        -- Check if rust-analyzer is already attached
-        local clients = vim.lsp.get_active_clients { bufnr = ev.buf }
-        local is_attached = false
-        for _, client in pairs(clients) do
-          if client.name == 'rust_analyzer' then
-            is_attached = true
-            break
-          end
-        end
-
-        -- Only start if not already attached
-        if not is_attached then
-          vim.cmd.LspStart 'rust_analyzer'
-        end
-      end
-    end, 100)
-  end,
-})
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
@@ -252,26 +227,7 @@ vim.opt.scrolloff = 20
 -- In your init.lua or lsp config file
 
 -- Global floating window border configuration
-local border = {
-  { '╭', 'FloatBorder' },
-  { '─', 'FloatBorder' },
-  { '╮', 'FloatBorder' },
-  { '│', 'FloatBorder' },
-  { '╯', 'FloatBorder' },
-  { '─', 'FloatBorder' },
-  { '╰', 'FloatBorder' },
-  { '│', 'FloatBorder' },
-}
-
--- Configure LSP hover and signature help windows
-vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, {
-  border = border,
-})
-
-vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-  border = border,
-})
-
+-- local border = 'rounded'
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
@@ -406,6 +362,20 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
   end
 end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
+
+-- Make sure you have the FloatBorder highlight group defined
+local border = 'rounded'
+vim.api.nvim_set_hl(0, 'FloatBorder', { fg = '#3b4261' }) -- Adjust color as needed
+
+-- Then configure the handlers
+vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, {
+  border = border,
+  max_width = 80,
+})
+
+vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+  border = border,
+})
 
 -- [[ Configure and install plugins ]]
 --
@@ -791,7 +761,12 @@ require('lazy').setup({
         end
         vim.diagnostic.config { signs = { text = diagnostic_signs } }
       end
-      vim.diagnostic.config { virtual_lines = true }
+      -- vim.diagnostic.config { virtual_lines = true }
+      vim.diagnostic.config {
+        virtual_text = {
+          virt_text_pos = 'eol',
+        },
+      }
       -- LSP servers and clients are able to communicate to each other what features they support.
       --  By default, Neovim doesn't support everything that is in the LSP specification.
       --  When you add nvim-cmp, luasnip, etc. Neovim now has *more* capabilities.
@@ -851,18 +826,8 @@ require('lazy').setup({
           single_file_support = true,
         },
         rust_analyzer = {
-          single_file_support = true,
           auto_attach = true,
           settings = {
-            checkOnSave = {
-              command = 'check',
-            },
-            diagnostics = {
-              enable = true,
-              experimental = {
-                enable = true,
-              },
-            },
             inlayHints = {
               enable = true,
               typeHints = true,
@@ -876,16 +841,6 @@ require('lazy').setup({
             },
             procMacro = {
               enable = true,
-            },
-          },
-        },
-        zls = {
-          settings = {
-            zls = {
-              enable_inlay_hints = true,
-              inlay_hints_show_builtin = true,
-              semantic_tokens = 'full',
-              enable_semantic_tokens = true,
             },
           },
         },

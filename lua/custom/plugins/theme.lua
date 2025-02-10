@@ -1,10 +1,57 @@
-return {
-  'rose-pine/neovim',
-  name = 'rose-pine',
-  config = function()
-    vim.cmd 'colorscheme rose-pine'
-  end,
-}
+-- return {
+--   'atelierbram/Base2Tone-nvim',
+--   config = function()
+--     vim.cmd.colorscheme 'base2tone_morning_dark'
+--     vim.api.nvim_set_hl(0, 'Normal', { bg = '#0A0A0A' })
+--     vim.api.nvim_set_hl(0, 'NormalFloat', { bg = '#0A0A0A' })
+--     vim.api.nvim_set_hl(0, 'SignColumn', { bg = '#0A0A0A' })
+--     vim.api.nvim_set_hl(0, 'NormalNC', { bg = '#0A0A0A' })
+--     -- Line number colors
+--     vim.api.nvim_set_hl(0, 'LineNr', { fg = '#3B4048', bg = '#0A0A0A' })
+--     vim.api.nvim_set_hl(0, 'CursorLineNr', { fg = '#528BFF', bg = '#0A0A0A' })
+--     vim.api.nvim_set_hl(0, 'TelescopeNormal', { bg = '#0C0E12' })
+--     vim.api.nvim_set_hl(0, 'TelescopeBorder', { fg = '#2C313A', bg = '#0C0E12' })
+--     vim.api.nvim_set_hl(0, 'TelescopePromptNormal', { bg = '#0E1014' })
+--     vim.api.nvim_set_hl(0, 'TelescopePromptBorder', { fg = '#2C313A', bg = '#0E1014' })
+--     vim.api.nvim_set_hl(0, 'TelescopePreviewBorder', { fg = '#2C313A', bg = '#0C0E12' })
+--     vim.api.nvim_set_hl(0, 'TelescopeResultsBorder', { fg = '#2C313A', bg = '#0C0E12' })
+--   end,
+-- }
+
+-- return {
+--   'ricardoraposo/gruvbox-minor.nvim',
+--   lazy = false,
+--   priority = 1000,
+--   config = function()
+--     -- First set up an autocmd that will run after the colorscheme is loaded
+--     vim.api.nvim_create_autocmd('ColorScheme', {
+--       pattern = 'gruvbox-minor',
+--       callback = function()
+--         vim.api.nvim_set_hl(0, 'Normal', { bg = '#0a0a0a' })
+--         vim.api.nvim_set_hl(0, 'NormalFloat', { bg = '#0a0a0a' })
+--         vim.api.nvim_set_hl(0, 'SignColumn', { bg = '#0a0a0a' })
+--         vim.api.nvim_set_hl(0, 'NormalNC', { bg = '#0a0a0a' })
+--         vim.api.nvim_set_hl(0, 'MsgArea', { bg = '#0a0a0a' })
+--         vim.api.nvim_set_hl(0, 'TelescopeBorder', { bg = '#0a0a0a' })
+--         vim.api.nvim_set_hl(0, 'NvimTreeNormal', { bg = '#0a0a0a' })
+--         vim.api.nvim_set_hl(0, 'EndOfBuffer', { bg = '#0a0a0a' })
+--         vim.api.nvim_set_hl(0, 'StatusLine', { bg = '#0a0a0a' })
+--         vim.api.nvim_set_hl(0, 'StatusLineNC', { bg = '#0a0a0a' })
+--         vim.api.nvim_set_hl(0, 'VertSplit', { bg = '#0a0a0a' })
+--       end,
+--     })
+--
+--     -- Then load the colorscheme
+--     vim.cmd.colorscheme 'gruvbox-minor'
+--   end,
+-- }
+-- return {
+--   'rose-pine/neovim',
+--   name = 'rose-pine',
+--   config = function()
+--     vim.cmd 'colorscheme rose-pine'
+--   end,
+-- }
 -- return {
 --   {
 --     'AlexvZyl/nordic.nvim',
@@ -23,7 +70,7 @@ return {
 --       -- Enable editor background transparency
 --       transparent = {
 --         -- Enable transparent background
---         bg = false,
+--         bg = true,
 --         -- Enable transparent background for floating windows
 --         float = false,
 --       },
@@ -67,10 +114,21 @@ return {
 --     end,
 --   },
 -- }
+-- Lazy
+-- return {
+--   'vague2k/vague.nvim',
+--   config = function()
+--     -- NOTE: you do not need to call setup if you don't want to.
+--     require('vague').setup {
+--       -- optional configuration here
+--     }
+--   end,
+-- }
 -- return {
 --   'tiagovla/tokyodark.nvim',
 --   opts = {
 --     -- custom options here
+--     gamma = 0.9,
 --   },
 --   config = function(_, opts)
 --     require('tokyodark').setup(opts) -- calling setup is optional
@@ -94,69 +152,41 @@ return {
 --   end,
 -- }
 -- return {
---   'bettervim/yugen.nvim',
---   config = function()
---     vim.cmd.colorscheme 'yugen'
---   end,
--- }
--- return {
 --   {
---     'yorumicolors/yorumi.nvim',
+--     'thesimonho/kanagawa-paper.nvim',
+--     lazy = false,
 --     priority = 1000,
 --     config = function()
---       vim.cmd.colorscheme 'yorumi'
+--       -- Setup with desired options
+--       require('kanagawa-paper').setup {
+--         transparent = false, -- Enable transparent background
+--         dimInactive = false, -- Disable dimming for inactive windows
+--         commentStyle = { italic = true }, -- Italic comments
+--         colors = {
+--           palette = {
+--             sumiInk0 = '#0f0f15', -- Replace with a darker color (e.g., almost black)
+--           },
+--         },
+--         overrides = function(colors)
+--           return {
+--             Normal = { bg = colors.palette.sumiInk0 }, -- Ensure the background uses the new color
+--             NormalFloat = { bg = colors.palette.sumiInk0 }, -- Floating windows
+--             FloatBorder = { bg = colors.palette.sumiInk0 }, -- Floating window borders
+--             Pmenu = { bg = colors.palette.sumiInk0 }, -- Popup menu background
+--             PmenuSel = { bg = colors.palette.sumiInk1 }, -- Selected item in popup menu
+--           }
+--         end,
+--       }
+--       vim.cmd 'colorscheme kanagawa-paper' -- Apply the colorscheme
 --     end,
 --   },
 -- }
--- return {
---   'shaunsingh/nord.nvim',
---   priority = 1000,
---   init = function()
---     -- Basic Nord configuration
---     vim.g.nord_contrast = true
---     vim.g.nord_borders = true
---     vim.g.nord_disable_background = false
---     vim.g.nord_italic = true
---     vim.g.nord_uniform_diff_background = true
---     -- Load the colorscheme first
---     vim.cmd.colorscheme 'nord'
---     -- Then apply custom highlights
---     local custom_highlights = {
---       -- Make normal background darker
---       Normal = { bg = '#1a1b26' },
---       NormalFloat = { bg = '#1a1b26' },
---       NvimTreeNormal = { bg = '#1a1b26' },
---       StatusLine = { bg = '#1a1b26' },
---       -- Darker sidebar
---       NvimTreeNormalNC = { bg = '#16161e' },
---       -- Comments
---       Comment = { italic = true },
---       ['@comment'] = { italic = true },
---       -- Keywords and Functions
---       Keyword = { bold = true, fg = '#81A1C1' },
---       Function = { fg = '#B48EAD', bold = true },
---       String = { fg = '#A3BE8C' },
---       -- Floating windows
---       FloatBorder = { bg = '#16161e' },
---       TelescopeBorder = { bg = '#16161e' },
---       -- Types
---       Type = { fg = '#5E81AC', bold = true },
---       ['@type'] = { fg = '#5E81AC' },
---       ['@type.builtin'] = { fg = '#81A1C1' },
---       ['@type.qualifier'] = { fg = '#88C0D0' },
---       ['@type.definition'] = { fg = '#5E81AC' },
---       ['@type.primitive'] = { fg = '#4C566A' },
---       -- Class related
---       ['@class'] = { fg = '#5E81AC', bold = true },
---       ['@class.constructor'] = { fg = '#88C0D0' },
---       -- Constants
---       ['@constant'] = { fg = '#345E4B' },
---       ['@constant.builtin'] = { fg = '#345E4B' },
---       Constant = { fg = '#345E4B' },
---     }
---     -- Apply the highlights
---     for group, colors in pairs(custom_highlights) do
---       vim.api.nvim_set_hl(0, group, colors)
---     end
---   end,
--- }
+return {
+  {
+    'yorumicolors/yorumi.nvim',
+    priority = 1000,
+    config = function()
+      vim.cmd.colorscheme 'yorumi'
+    end,
+  },
+}
