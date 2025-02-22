@@ -92,6 +92,7 @@ vim.g.maplocalleader = ' '
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
 vim.o.guifont = 'JetBrainsMono Nerd Font:h10'
+-- For specific transparency level
 -- vim.o.guifont = 'UbuntuMono Nerd Font:h10'
 -- [[ Setting options ]]
 -- See `:help vim.opt`
@@ -790,11 +791,19 @@ require('lazy').setup({
             'clangd',
             '--background-index',
             '--clang-tidy',
-            '--header-insertion=iwyu',
             '--completion-style=detailed',
             '--header-insertion-decorators',
             '--offset-encoding=utf-16', -- This helps with encoding issues
             '--enable-config', -- This will enable reading from .clangd
+            -- '--sort-includes=never', -- This will prevent include sorting
+          },
+          init_options = {
+            usePlaceholders = true,
+            completeUnimported = true,
+            clangdFileStatus = true,
+            formatStyle = 'file',
+            includeStyle = 'LLVM',
+            sortIncludes = false,
           },
           filetypes = { 'c', 'cpp', 'objc', 'objcpp', 'cuda', 'proto' },
           root_dir = util.root_pattern('.clangd', '.clang-tidy', '.clang-format', 'compile_commands.json', 'compile_flags.txt', 'configure.ac', '.git'),
