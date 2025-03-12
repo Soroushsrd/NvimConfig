@@ -83,6 +83,11 @@ I hope you enjoy your Neovim journey,
 
 P.S. You can delete this when you're done too. It's your config now! :)
 --]]
+--
+
+vim.opt.termguicolors = true
+vim.cmd 'colorscheme glacier'
+-- Ensure statusline is always loaded
 
 -- Set <space> as the leader key
 -- See `:help mapleader`
@@ -140,6 +145,60 @@ local function create_term()
   vim.cmd 'startinsert'
 end
 
+-- Python venv related
+vim.api.nvim_create_user_command('PythonLspInfo', function()
+  local clients = vim.lsp.get_active_clients { name = 'pyright' }
+  if #clients > 0 then
+    local pythonPath = clients[1].config.settings.python.pythonPath
+    print('Python path: ' .. (pythonPath ~= '' and pythonPath or 'default system Python'))
+  else
+    print 'Pyright not running'
+  end
+end, {})
+-- Template loading function
+vim.api.nvim_create_user_command('Template', function(opts)
+  local template_name = opts.args
+  local template_path = vim.fn.stdpath 'config' .. '/templates/html/' .. template_name .. '.html'
+
+  if vim.fn.filereadable(template_path) == 1 then
+    local lines = vim.fn.readfile(template_path)
+    vim.api.nvim_buf_set_lines(0, 0, -1, false, lines)
+    -- Move cursor to a sensible position (e.g., between body tags)
+    vim.cmd 'normal! /<body>\\n/+1'
+  else
+    print('Template not found: ' .. template_name)
+  end
+end, {
+  nargs = 1,
+  complete = function()
+    local template_dir = vim.fn.stdpath 'config' .. '/templates/html/'
+    local templates = vim.fn.globpath(template_dir, '*.html', false, true)
+    local result = {}
+    for _, template in ipairs(templates) do
+      table.insert(result, vim.fn.fnamemodify(template, ':t:r'))
+    end
+    return result
+  end,
+})
+
+-- Auto-template for new HTML files (optional)
+vim.api.nvim_create_autocmd({ 'BufNewFile' }, {
+  pattern = '*.html',
+  callback = function()
+    vim.cmd 'Template basic'
+  end,
+})
+-- HTML specific indentation settings
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'html',
+  callback = function()
+    vim.bo.tabstop = 2 -- Width of tab character
+    vim.bo.softtabstop = 2 -- Fine tunes amount of whitespace
+    vim.bo.shiftwidth = 2 -- Number of spaces for each indentation
+    vim.bo.expandtab = true -- Use spaces instead of tabs
+    vim.bo.autoindent = true -- Copy indent from current line when starting a new line
+  end,
+})
 -- Create the commands
 vim.api.nvim_create_user_command('Term', create_term, {})
 vim.api.nvim_create_user_command('TermClose', _G.terminal_utils.close_term, {})
@@ -198,6 +257,15 @@ vim.opt.list = true
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
 vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'sh',
+  callback = function()
+    vim.bo.expandtab = true -- Use spaces instead of tabs
+    vim.bo.shiftwidth = 4 -- Indent with 4 spaces
+    vim.bo.softtabstop = 4
+    vim.bo.tabstop = 4
+  end,
+})
+vim.api.nvim_create_autocmd('FileType', {
   pattern = { 'go', 'cpp', 'c' },
   callback = function()
     local is_go = vim.bo.filetype == 'go'
@@ -239,12 +307,86 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 --
 vim.keymap.set('n', '<Leader>cc', "<cmd>lua vim.cmd('Cargo check')<CR>", { desc = 'Cargo check' })
 vim.keymap.set('n', '<Leader>cr', "<cmd>lua vim.cmd('Cargo run')<CR>", { desc = 'Cargo run' })
--- Zig commands
+-- bash commands
+vim.keymap.set('n', '<Leader>hh', ':!chmod +x %<CR>', { silent = true, desc = 'Make bash executable' })
+vim.keymap.set('n', '<Leader>hr', ':!%<CR>', { silent = true, desc = 'Run bash executable' })
+-- Solidity and foundry
+vim.keymap.set('n', '<leader>sc', ":!solc --bin <C-r>=expand('%p')<CR><CR>", { silent = true, desc = 'Compile solidity with solc' })
+vim.keymap.set('n', '<leader>fb', ':!forge build<CR>', { silent = true, desc = 'Forge build' })
+vim.keymap.set('n', '<leader>fd', ":!forge script <C-r>=expand('%:p')<CR><CR>", { silent = true, desc = 'Run forge script (current file)' })
+vim.keymap.set('n', '<leader>ft', ':!forge test<CR>', { silent = true, desc = 'Run forge tests' })
+vim.keymap.set('n', '<leader>fT', ':!forge test -vv<CR>', { silent = true, desc = 'Run forge tests (verbose)' })
+vim.keymap.set('n', '<leader>fc', ':!forge coverage<CR>', { silent = true, desc = 'Run forge coverage' })
+vim.keymap.set('n', '<leader>fs', ':!forge snapshot<CR>', { silent = true, desc = 'Run forge snapshot' })
+-- Keymappings for Solana development
+-- Solana CLI keybindings
+vim.keymap.set('n', '<leader>sa', ':!solana address<CR>', { silent = true, desc = 'Show Solana public key' })
+vim.keymap.set('n', '<leader>sb', ':!solana balance<CR>', { silent = true, desc = 'Check SOL balance' })
+vim.keymap.set('n', '<leader>spd', ':!solana program deploy<CR>', { silent = true, desc = 'Deploy Solana program' })
+vim.keymap.set('n', '<leader>stv', ':!solana-test-validator<CR>', { silent = true, desc = 'Start Solana test validator' })
+
+-- Anchor keybindings
+vim.keymap.set('n', '<leader>ab', ':!anchor build<CR>', { silent = true, desc = 'Build Anchor program' })
+vim.keymap.set('n', '<leader>ad', ':!anchor deploy<CR>', { silent = true, desc = 'Deploy Anchor program' })
+vim.keymap.set('n', '<leader>att', ':!anchor test<CR>', { silent = true, desc = 'Run Anchor tests' })
+vim.keymap.set('n', '<leader>ats', ':!anchor test --skip-local-validator<CR>', { silent = true, desc = 'Run Anchor tests without validator' })
+vim.keymap.set('n', '<leader>ai', ':!anchor init<CR>', { silent = true, desc = 'Initialize new Anchor project' })
+vim.keymap.set('n', '<leader>ar', ':!anchor run<CR>', { silent = true, desc = 'Run Anchor script' })
+vim.keymap.set('n', '<leader>av', ':!anchor verify<CR>', { silent = true, desc = 'Verify Anchor program' })
+
+-- Custom commands for Solidity
+vim.api.nvim_create_user_command('ForgeDeploy', function()
+  local address = vim.fn.input('RPC URL: ', 'http://127.0.0.1:8545')
+  local contract = vim.fn.expand '%:t:r' -- Gets filename without extension
+  vim.cmd('!forge create ' .. contract .. ' --rpc-url ' .. address .. ' --interactive --broadcast')
+end, {})
+
+-- Solidity filetype detection
+vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
+  pattern = '*.sol',
+  callback = function()
+    vim.opt_local.filetype = 'solidity'
+  end,
+})
+
+-- Solidity-specific indentation
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'solidity',
+  callback = function()
+    vim.bo.tabstop = 4
+    vim.bo.softtabstop = 4
+    vim.bo.shiftwidth = 4
+    vim.bo.expandtab = true
+    vim.bo.smartindent = true
+  end,
+})
+
+-- Function to toggle Anvil terminal
+local anvil_term_id = nil
+
+function _G.toggle_anvil()
+  if anvil_term_id == nil or not vim.api.nvim_buf_is_valid(anvil_term_id) then
+    vim.cmd 'botright split'
+    vim.cmd 'resize 15'
+    anvil_term_id = vim.api.nvim_get_current_buf()
+    vim.fn.termopen 'anvil'
+    vim.cmd 'set nobuflisted'
+  else
+    local win_ids = vim.fn.win_findbuf(anvil_term_id)
+    if #win_ids == 0 then
+      vim.cmd 'botright split'
+      vim.cmd 'resize 15'
+      vim.cmd('buffer ' .. anvil_term_id)
+    else
+      vim.api.nvim_win_close(win_ids[1], true)
+    end
+  end
+end
 -- Zig specific keymaps
-vim.keymap.set('n', '<leader>zb', ':!zig build<CR>', opts)
-vim.keymap.set('n', '<leader>zr', ':!zig build run<CR>', opts)
-vim.keymap.set('n', '<leader>zt', ':!zig test<CR>', opts)
-vim.keymap.set('n', '<leader>zf', ':!zig fmt %<CR>', opts)
+-- vim.keymap.set('n', '<leader>zb', ':!zig build<CR>', opts)
+-- vim.keymap.set('n', '<leader>zr', ':!zig build run<CR>', opts)
+-- vim.keymap.set('n', '<leader>zt', ':!zig test<CR>', opts)
+-- vim.keymap.set('n', '<leader>zf', ':!zig fmt %<CR>', opts)
 -- C++ commands
 -- C++ compilation and execution
 vim.keymap.set('n', '<Leader>rc', function()
@@ -776,6 +918,115 @@ require('lazy').setup({
       capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
       local util = require 'lspconfig/util'
 
+      -- Solidity snippets (using LuaSnip)
+      local ls = require 'luasnip'
+      local s = ls.snippet
+      local t = ls.text_node
+      local i = ls.insert_node
+      -- local f = ls.function_node
+
+      ls.add_snippets('solidity', {
+        -- Contract snippet
+        s('contract', {
+          t '// SPDX-License-Identifier: MIT',
+          t { '', 'pragma solidity ^0.8.20;', '', 'contract ' },
+          i(1, 'Name'),
+          t ' {',
+          t { '', '\t' },
+          i(0),
+          t { '', '}' },
+        }),
+
+        -- Function snippet
+        s('func', {
+          t 'function ',
+          i(1, 'name'),
+          t '(',
+          i(2),
+          t ') ',
+          i(3, 'public'),
+          t ' ',
+          i(4),
+          t ' {',
+          t { '', '\t' },
+          i(0),
+          t { '', '}' },
+        }),
+
+        -- Event snippet
+        s('event', {
+          t 'event ',
+          i(1, 'Name'),
+          t '(',
+          i(2),
+          t ');',
+          i(0),
+        }),
+
+        -- Error snippet
+        s('error', {
+          t 'error ',
+          i(1, 'Name'),
+          t '(',
+          i(2),
+          t ');',
+          i(0),
+        }),
+
+        -- Struct snippet
+        s('struct', {
+          t 'struct ',
+          i(1, 'Name'),
+          t ' {',
+          t { '', '\t' },
+          i(0),
+          t { '', '}' },
+        }),
+
+        -- Import snippet
+        s('imp', {
+          t 'import "',
+          i(1, './Contract.sol'),
+          t '";',
+          i(0),
+        }),
+
+        -- Require snippet
+        s('req', {
+          t 'require(',
+          i(1, 'condition'),
+          t ', "',
+          i(2, 'error message'),
+          t '");',
+          i(0),
+        }),
+
+        -- Constructor snippet
+        s('constructor', {
+          t 'constructor(',
+          i(1),
+          t ') ',
+          i(2),
+          t ' {',
+          t { '', '\t' },
+          i(0),
+          t { '', '}' },
+        }),
+
+        -- Mapping snippet
+        s('mapping', {
+          t 'mapping(',
+          i(1, 'key'),
+          t ' => ',
+          i(2, 'value'),
+          t ') ',
+          i(3, 'public'),
+          t ' ',
+          i(4, 'variableName'),
+          t ';',
+          i(0),
+        }),
+      })
       -- Enable the following language servers
       --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
       --
@@ -818,9 +1069,9 @@ require('lazy').setup({
           },
         },
         pyright = {
-          cmd = { 'C:\\Users\\Lenovo\\AppData\\Local\\nvim-data\\mason\\bin\\pyright-langserver.cmd', '--stdio' },
+          cmd = { 'pyright-langserver', '--stdio' },
           filetypes = { 'python' },
-          root_dir = util.root_pattern('.git', '.py'),
+          root_dir = util.root_pattern('.git', 'pyproject.toml', 'setup.py', 'requirements.txt', '.venv', 'venv'),
           settings = {
             python = {
               analysis = {
@@ -828,10 +1079,101 @@ require('lazy').setup({
                 useLibraryCodeForTypes = true,
                 diagnosticMode = 'workspace',
                 typeCheckingMode = 'basic',
+                extraPaths = {},
               },
-              pythonPath = vim.fn.system('poetry env info --path'):gsub('%s+', '') .. '/bin/python',
+              -- Use a string value instead of a function for pythonPath
+              pythonPath = '', -- This will use the default Python path
             },
           },
+          on_init = function(client)
+            -- Dynamically determine Python path when the LSP initializes
+            local function get_python_path()
+              -- Try Poetry first
+              local poetry_path = vim.fn.trim(vim.fn.system 'poetry env info --path 2>/dev/null')
+              if poetry_path ~= '' and vim.v.shell_error == 0 then
+                return poetry_path .. '/bin/python'
+              end
+
+              -- Try to find local virtual environments
+              local venv_paths = {
+                vim.fn.getcwd() .. '/.venv',
+                vim.fn.getcwd() .. '/venv',
+                vim.fn.getcwd() .. '/env',
+              }
+
+              for _, path in ipairs(venv_paths) do
+                if vim.fn.isdirectory(path) == 1 then
+                  return path .. '/bin/python'
+                end
+              end
+
+              -- Fall back to system Python
+              return vim.fn.exepath 'python'
+            end
+
+            -- Update the python path in client settings
+            client.config.settings.python.pythonPath = get_python_path()
+            client.notify('workspace/didChangeConfiguration', { settings = client.config.settings })
+          end,
+          single_file_support = true,
+        },
+        solidity = {
+          cmd = { 'nomicfoundation-solidity-language-server', '--stdio' },
+          filetypes = { 'solidity' },
+          root_dir = util.root_pattern('hardhat.config.*', 'foundry.toml', '.git'),
+          single_file_support = true,
+          settings = {
+            solidity = {
+              includePath = '',
+              remapping = {},
+              formatter = {
+                enabled = true,
+              },
+              compilerAllowedDirectories = {},
+              compileUsingRemoteVersion = 'latest',
+              compileUsingLocalVersion = '',
+              linter = {
+                enabled = true,
+              },
+              -- Enable document highlight (highlighting references)
+              documentHighlight = {
+                enabled = true,
+              },
+              -- Configure inlay hints for type information
+              inlayHints = {
+                parameterNames = true,
+                constructorKeywords = true,
+                storageKeywords = true,
+                structKeywords = true,
+              },
+            },
+          },
+        },
+
+        efm = {
+          init_options = { documentFormatting = true },
+          filetypes = { 'solidity' },
+          settings = {
+            languages = {
+              solidity = {
+                {
+                  lintStdin = true,
+                  lintIgnoreExitCode = true,
+                  lintCommand = 'solhint -f stylish stdin',
+                  lintFormats = {
+                    ' %#%l:%c %#%tarning %#%m',
+                    ' %#%l:%c %#%trror %#%m',
+                  },
+                  lintSource = 'solhint',
+                },
+              },
+            },
+          },
+        },
+        biome = {
+          cmd = { 'biome', 'lsp-proxy' },
+          filetypes = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'json' },
+          root_dir = require('lspconfig').util.root_pattern('biome.json', 'biome.jsonc'),
           single_file_support = true,
         },
         rust_analyzer = {
@@ -852,6 +1194,13 @@ require('lazy').setup({
               enable = true,
             },
           },
+          html = {
+            capabilities = capabilities,
+          },
+          emmet_ls = {
+            capabilities = capabilities,
+            filetypes = { 'html', 'css', 'javascriptreact', 'typescriptreact' },
+          },
         },
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
@@ -861,7 +1210,6 @@ require('lazy').setup({
         -- But for many setups, the LSP (`ts_ls`) will work just fine
         -- ts_ls = {},
         --
-
         lua_ls = {
           -- cmd = { ... },
           -- filetypes = { ... },
@@ -945,7 +1293,7 @@ require('lazy').setup({
       formatters_by_ft = {
         lua = { 'stylua' },
         -- Conform can also run multiple formatters sequentially
-        -- python = { "isort", "black" },
+        python = { 'black' },
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
         -- javascript = { "prettierd", "prettier", stop_after_first = true },
@@ -1188,6 +1536,45 @@ require('lazy').setup({
     },
   },
 })
+-- Create a basic solhint configuration if it doesn't exist
+local function setup_solhint()
+  local home = vim.fn.expand '~'
+  local solhint_config = home .. '/.solhint.json'
 
+  if vim.fn.filereadable(solhint_config) == 0 then
+    local config = [[
+{
+  "extends": "solhint:recommended",
+  "rules": {
+    "compiler-version": ["error", "^0.8.0"],
+    "func-visibility": ["warn", {"ignoreConstructors": true}]
+  }
+}
+]]
+    vim.fn.writefile(vim.fn.split(config, '\n'), solhint_config)
+    print 'Created default .solhint.json in your home directory'
+  end
+end
+
+-- Run the setup function after Neovim is initialized
+vim.api.nvim_create_autocmd('VimEnter', {
+  callback = function()
+    setup_solhint()
+  end,
+})
+-- Load Solidity configuration
+require('solidity_setup').setup()
+
+-- Add explicit file type detection
+vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
+  pattern = '*.sol',
+  command = 'set filetype=solidity',
+})
+vim.api.nvim_create_autocmd('BufWritePre', {
+  pattern = { '*.ts', '*.tsx', '*.js', '*.jsx', '*.json' },
+  callback = function()
+    vim.lsp.buf.format()
+  end,
+})
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
