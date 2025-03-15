@@ -318,6 +318,13 @@ vim.keymap.set('n', '<leader>ft', ':!forge test<CR>', { silent = true, desc = 'R
 vim.keymap.set('n', '<leader>fT', ':!forge test -vv<CR>', { silent = true, desc = 'Run forge tests (verbose)' })
 vim.keymap.set('n', '<leader>fc', ':!forge coverage<CR>', { silent = true, desc = 'Run forge coverage' })
 vim.keymap.set('n', '<leader>fs', ':!forge snapshot<CR>', { silent = true, desc = 'Run forge snapshot' })
+vim.keymap.set('n', '<leader>fm', ':!forge fmt<CR>', { silent = true, desc = 'Run forge fmt' })
+vim.keymap.set(
+  'n',
+  '<leader>js',
+  [[:exe "new .solhint.json" | exe "normal i" . substitute('{"extends": "solhint:recommended","rules": {"compiler-version": ["warn"],"func-name-mixedcase": ["warn"],"imports-on-top": ["warn"],"contract-name-camelcase": ["warn"],"no-empty-blocks": ["warn"],"not-rely-on-time": ["warn"]}}', "'", "''", 'g') | exe "normal! gg=G" | exe "w" | exe "bd"]],
+  { silent = true, desc = 'Create a solhint json' }
+)
 -- Keymappings for Solana development
 -- Solana CLI keybindings
 vim.keymap.set('n', '<leader>sa', ':!solana address<CR>', { silent = true, desc = 'Show Solana public key' })
@@ -1117,59 +1124,58 @@ require('lazy').setup({
           end,
           single_file_support = true,
         },
-        solidity = {
-          cmd = { 'nomicfoundation-solidity-language-server', '--stdio' },
-          filetypes = { 'solidity' },
-          root_dir = util.root_pattern('hardhat.config.*', 'foundry.toml', '.git'),
-          single_file_support = true,
-          settings = {
-            solidity = {
-              includePath = '',
-              remapping = {},
-              formatter = {
-                enabled = true,
-              },
-              compilerAllowedDirectories = {},
-              compileUsingRemoteVersion = 'latest',
-              compileUsingLocalVersion = '',
-              linter = {
-                enabled = true,
-              },
-              -- Enable document highlight (highlighting references)
-              documentHighlight = {
-                enabled = true,
-              },
-              -- Configure inlay hints for type information
-              inlayHints = {
-                parameterNames = true,
-                constructorKeywords = true,
-                storageKeywords = true,
-                structKeywords = true,
-              },
-            },
-          },
-        },
-
-        efm = {
-          init_options = { documentFormatting = true },
-          filetypes = { 'solidity' },
-          settings = {
-            languages = {
-              solidity = {
-                {
-                  lintStdin = true,
-                  lintIgnoreExitCode = true,
-                  lintCommand = 'solhint -f stylish stdin',
-                  lintFormats = {
-                    ' %#%l:%c %#%tarning %#%m',
-                    ' %#%l:%c %#%trror %#%m',
-                  },
-                  lintSource = 'solhint',
-                },
-              },
-            },
-          },
-        },
+        -- solidity = {
+        --   filetypes = { 'solidity' },
+        --   root_dir = util.root_pattern('hardhat.config.*', 'foundry.toml', '.git'),
+        --   single_file_support = true,
+        --   settings = {
+        --     solidity = {
+        --       includePath = '',
+        --       remapping = {},
+        --       formatter = {
+        --         enabled = true,
+        --       },
+        --       compilerAllowedDirectories = {},
+        --       compileUsingRemoteVersion = 'latest',
+        --       compileUsingLocalVersion = '',
+        --       linter = {
+        --         enabled = true,
+        --       },
+        --       -- Enable document highlight (highlighting references)
+        --       documentHighlight = {
+        --         enabled = true,
+        --       },
+        --       -- Configure inlay hints for type information
+        --       inlayHints = {
+        --         parameterNames = true,
+        --         constructorKeywords = true,
+        --         storageKeywords = true,
+        --         structKeywords = true,
+        --       },
+        --     },
+        --   },
+        -- },
+        --
+        -- efm = {
+        --   init_options = { documentFormatting = true },
+        --   filetypes = { 'solidity' },
+        --   settings = {
+        --     languages = {
+        --       solidity = {
+        --         {
+        --           lintStdin = true,
+        --           lintIgnoreExitCode = true,
+        --           lintCommand = 'solhint -f stylish stdin',
+        --           lintFormats = {
+        --             ' %#%l:%c %#%tarning %#%m',
+        --             ' %#%l:%c %#%trror %#%m',
+        --           },
+        --           lintSource = 'solhint',
+        --         },
+        --       },
+        --     },
+        --   },
+        -- },
         biome = {
           cmd = { 'biome', 'lsp-proxy' },
           filetypes = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'json' },
@@ -1455,6 +1461,8 @@ require('lazy').setup({
       --  Check out: https://github.com/echasnovski/mini.nvim
     end,
   },
+  { 'TovarishFin/vim-solidity', ft = 'solidity' },
+  -- { 'iden3/vim-ethereum-parity', ft = 'solidity' },
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     event = { 'BufReadPost', 'BufNewFile' },
