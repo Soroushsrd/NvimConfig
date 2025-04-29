@@ -6,6 +6,7 @@ return {
       vim.g.tex_flavor = 'latex'
       vim.g.vimtex_view_method = 'zathura' -- or 'mupdf', 'evince', etc.
       vim.g.vimtex_quickfix_mode = 0
+      vim.api.nvim_set_keymap('n', '<Leader>pc', ':!pdflatex %<CR>', { noremap = true, silent = false })
       vim.g.vimtex_compiler_latexmk = {
         options = {
           '-verbose',
