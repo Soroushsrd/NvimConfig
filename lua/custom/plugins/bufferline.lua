@@ -34,10 +34,10 @@ return {
     require('cokeline').setup {
       default_hl = {
         fg = function(buffer)
-          return buffer.is_focused and get_hex('ColorColumn', 'bg') or get_hex('Normal', 'fg')
+          return buffer.is_focused and '#ebdbb2' or '#928374' -- Bright text for active, muted for inactive
         end,
         bg = function(buffer)
-          return buffer.is_focused and get_hex('Normal', 'fg') or get_hex('ColorColumn', 'bg')
+          return buffer.is_focused and '#504945' or '#0a0a0a' -- Contrasting bg for active, dark for inactive
         end,
       },
       components = {

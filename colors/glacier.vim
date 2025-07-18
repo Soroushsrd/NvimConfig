@@ -1,13 +1,58 @@
 " glacier.vim - A dark colorscheme for Neovim based on Ghostty's Glacier
 
-" reset highlighting
+" Bootstrap ===================================================================
+
 hi clear
-if exists("syntax_on")
-  syntax reset
+if exists('syntax_on') | syntax reset | endif
+set background=dark
+let g:colors_name = 'glacier'
+
+if !(has('termguicolors') && &termguicolors) && !has('gui_running') && &t_Co != 256
+  finish
 endif
 
-let g:colors_name = "glacier"
-set termguicolors
+" Helper functions =============================================================
+
+" Execute the 'highlight' command with a List of arguments.
+function! s:Highlight(args)
+  exec 'highlight ' . join(a:args, ' ')
+endfunction
+
+function! s:AddGroundValues(accumulator, ground, color)
+  let new_list = a:accumulator
+  for [where, value] in items(a:color)
+    call add(new_list, where . a:ground . '=' . value)
+  endfor
+
+  return new_list
+endfunction
+
+function! s:Col(group, fg_name, ...)
+  " ... = optional bg_name
+
+  let pieces = [a:group]
+
+  if a:fg_name !=# ''
+    let pieces = s:AddGroundValues(pieces, 'fg', s:colors[a:fg_name])
+  endif
+
+  if a:0 > 0 && a:1 !=# ''
+    let pieces = s:AddGroundValues(pieces, 'bg', s:colors[a:1])
+  endif
+
+  call s:Clear(a:group)
+  call s:Highlight(pieces)
+endfunction
+
+function! s:Attr(group, attr)
+  let l:attrs = [a:group, 'term=' . a:attr, 'cterm=' . a:attr, 'gui=' . a:attr]
+  call s:Highlight(l:attrs)
+endfunction
+
+function! s:Clear(group)
+  exec 'highlight clear ' . a:group
+endfunction
+
 
 " Define colors
 let s:bg = "#0b0d0f"
@@ -51,6 +96,7 @@ let g:terminal_color_12 = s:bright_blue
 let g:terminal_color_13 = s:bright_orange
 let g:terminal_color_14 = s:light_cyan
 let g:terminal_color_15 = s:bright_white
+
 
 " basic editor colors
 exe "hi Normal guifg=".s:fg." guibg=".s:bg
@@ -125,6 +171,9 @@ exe "hi DiagnosticUnderlineHint gui=underline guisp=".s:cyan
 exe "hi LspReferenceText guibg=".s:dark_gray
 exe "hi LspReferenceRead guibg=".s:dark_gray
 exe "hi LspReferenceWrite guibg=".s:bright_red
+
+" Tab line.
+exe "hi TabLineSel guifg=".s:bright_blue
 
 " fzf, file tree and the rest
 exe "hi Directory guifg=".s:bright_blue

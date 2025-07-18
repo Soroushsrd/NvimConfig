@@ -47,7 +47,7 @@ function M.setup()
   nvim_lsp.efm.setup {
     init_options = { documentFormatting = true },
     filetypes = { 'solidity' },
-    root_dir = nvim_lsp.util.root_pattern('.solhint.json', '.git', 'foundry.toml'),
+    root_dir = nvim_lsp.util.root_pattern('.solhint.json', 'foundry.toml'),
     settings = {
       languages = {
         solidity = {

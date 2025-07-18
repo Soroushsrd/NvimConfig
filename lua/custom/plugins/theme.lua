@@ -1,0 +1,123 @@
+-- return {
+--   'yorumicolors/yorumi.nvim',
+--   config = function()
+--     vim.cmd.colorscheme 'yorumi'
+--   end,
+-- }
+-- return {
+--   'ricardoraposo/gruvbox-minor.nvim',
+--   lazy = false,
+--   priority = 1000,
+--   config = function()
+--     -- First set up an autocmd that will run after the colorscheme is loaded
+--     vim.api.nvim_create_autocmd('ColorScheme', {
+--       pattern = 'gruvbox-minor',
+--       callback = function()
+--         vim.api.nvim_set_hl(0, 'Normal', { bg = '#0a0a0a' })
+--         vim.api.nvim_set_hl(0, 'NormalFloat', { bg = '#0a0a0a' })
+--         vim.api.nvim_set_hl(0, 'SignColumn', { bg = '#0a0a0a' })
+--         vim.api.nvim_set_hl(0, 'NormalNC', { bg = '#0a0a0a' })
+--         vim.api.nvim_set_hl(0, 'MsgArea', { bg = '#0a0a0a' })
+--         vim.api.nvim_set_hl(0, 'TelescopeBorder', { bg = '#0a0a0a' })
+--         vim.api.nvim_set_hl(0, 'NvimTreeNormal', { bg = '#0a0a0a' })
+--         vim.api.nvim_set_hl(0, 'EndOfBuffer', { bg = '#0a0a0a' })
+--         vim.api.nvim_set_hl(0, 'StatusLine', { bg = '#0a0a0a' })
+--         vim.api.nvim_set_hl(0, 'StatusLineNC', { bg = '#0a0a0a' })
+--         vim.api.nvim_set_hl(0, 'VertSplit', { bg = '#0a0a0a' })
+--         vim.api.nvim_set_hl(0, 'TabLine', { bg = '#0a0a0a', fg = '#928374' })
+--         vim.api.nvim_set_hl(0, 'TabLineFill', { bg = '#0a0a0a' })
+--         vim.api.nvim_set_hl(0, 'TabLineSel', { bg = '#504945', fg = '#ebdbb2', bold = true })
+--       end,
+--     })
+--
+--     -- Then load the colorscheme
+--     vim.cmd.colorscheme 'gruvbox-minor'
+--   end,
+-- }
+-- return {
+--   'sainnhe/gruvbox-material',
+--   lazy = false,
+--   priority = 1000,
+--   config = function()
+--     -- Optionally configure and load the colorscheme
+--     -- directly inside the plugin declaration.
+--     vim.o.termguicolors = true
+--     --
+--     -- Important! Enable termguicolors for proper color rendering
+--
+--     vim.g.gruvbox_material_enable_italic = true
+--     vim.g.gruvbox_material_dim_inactive_windows = 1
+--     vim.g.gruvbox_material_background = 'hard'
+--     -- vim.o.background = 'light'
+--     -- doesnt work in light mode
+--     -- vim.g.gruvbox_material_transparent_background = 1
+--     vim.g.gruvbox_material_cursor = 'auto'
+--     vim.g.gruvbox_material_inlay_hints_background = 'dimmed'
+--     vim.cmd.colorscheme 'gruvbox-material'
+--   end,
+-- }
+-- return {
+--   'atelierbram/Base2Tone-nvim',
+--   config = function()
+--     vim.cmd.colorscheme 'base2tone_space_dark'
+--     vim.api.nvim_set_hl(0, 'Normal', { bg = '#0A0A0A' })
+--     vim.api.nvim_set_hl(0, 'NormalFloat', { bg = '#0A0A0A' })
+--     vim.api.nvim_set_hl(0, 'SignColumn', { bg = '#0A0A0A' })
+--     vim.api.nvim_set_hl(0, 'NormalNC', { bg = '#0A0A0A' })
+--     -- Line number colors
+--     vim.api.nvim_set_hl(0, 'LineNr', { fg = '#3B4048', bg = '#0A0A0A' })
+--     vim.api.nvim_set_hl(0, 'CursorLineNr', { fg = '#528BFF', bg = '#0A0A0A' })
+--     vim.api.nvim_set_hl(0, 'TelescopeNormal', { bg = '#0C0E12' })
+--     vim.api.nvim_set_hl(0, 'TelescopeBorder', { fg = '#2C313A', bg = '#0C0E12' })
+--     vim.api.nvim_set_hl(0, 'TelescopePromptNormal', { bg = '#0E1014' })
+--     vim.api.nvim_set_hl(0, 'TelescopePromptBorder', { fg = '#2C313A', bg = '#0E1014' })
+--     vim.api.nvim_set_hl(0, 'TelescopePreviewBorder', { fg = '#2C313A', bg = '#0C0E12' })
+--     vim.api.nvim_set_hl(0, 'TelescopeResultsBorder', { fg = '#2C313A', bg = '#0C0E12' })
+--   end,
+-- }
+-- return { -- You can easily change to a different colorscheme.
+--   -- Change the name of the colorscheme plugin below, and then
+--   -- change the command in the config to whatever the name of that colorscheme is.
+--   --
+--   -- If you want to see what colorschemes are already installed, you can use :Telescope colorscheme.
+--   'folke/tokyonight.nvim',
+--   priority = 1000, -- Make sure to load this before all the other start plugins.
+--   init = function()
+--     require('tokyonight').setup {
+--       dim_inactive = true,
+--     }
+--     -- Load the colorscheme here.
+--     -- Like many other themes, this one has different styles, and you could load
+--     -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
+--     vim.cmd.colorscheme 'tokyonight-night'
+--     -- You can configure highlights by doing something like:
+--     vim.cmd.hi 'Comment gui=none'
+--   end,
+-- }
+return {
+  'bluz71/vim-nightfly-colors',
+  name = 'nightfly',
+  lazy = false,
+  priority = 1000,
+  init = function()
+    vim.cmd [[colorscheme nightfly]]
+  end,
+}
+-- return {
+--   'catppuccin/nvim',
+--   name = 'catppuccin',
+--   priority = 1000,
+--   init = function()
+--     require('catppuccin').setup {
+--       flavour = 'mocha',
+--       transparent_background = false,
+--       dim_inactive = {
+--         enabled = false, -- dims the background color of inactive window
+--         shade = 'dark',
+--         percentage = 0.4, -- percentage of the shade to apply to the inactive window
+--       },
+--     }
+--
+--     vim.cmd.colorscheme 'catppuccin'
+--   end,
+-- }

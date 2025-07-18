@@ -1,7 +1,7 @@
 vim.opt.termguicolors = true
-vim.cmd 'colorscheme memoonry'
+-- vim.cmd 'colorscheme gotham'
 -- Ensure statusline is always loaded
-vim.g.neovide_opacity = 0.9
+vim.g.neovide_opacity = 0.90
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
@@ -9,12 +9,12 @@ vim.g.maplocalleader = ' '
 vim.g.have_nerd_font = true
 -- vim.o.guifont = 'JetBrainsMono Nerd Font:h11'
 vim.o.guifont = 'CaskaydiaCove Nerd Font Propo:h11'
+-- vim.o.guifont = 'UbuntuMono Nerd Font:h11'
 
 if vim.g.neovide then
   vim.g.neovide_fullscreen = true
 end
 -- For specific transparency level
--- vim.o.guifont = 'UbuntuMono Nerd Font:h11'
 -- [[ Setting options ]]
 -- See `:help vim.opt`
 --Terminal:
@@ -170,9 +170,9 @@ vim.api.nvim_create_autocmd('FileType', {
   pattern = 'sh',
   callback = function()
     vim.bo.expandtab = true -- Use spaces instead of tabs
-    vim.bo.shiftwidth = 4 -- Indent with 4 spaces
-    vim.bo.softtabstop = 4
-    vim.bo.tabstop = 4
+    vim.bo.shiftwidth = 2 -- Indent with 4 spaces
+    vim.bo.softtabstop = 2
+    vim.bo.tabstop = 2
   end,
 })
 vim.api.nvim_create_autocmd('FileType', {
@@ -182,17 +182,17 @@ vim.api.nvim_create_autocmd('FileType', {
     -- Use real tabs only in Go, spaces in C++
     vim.bo.expandtab = not is_go
     -- Set tab width to 4
-    vim.bo.tabstop = 4
+    vim.bo.tabstop = 2
     -- Set shift width for autoindent
-    vim.bo.shiftwidth = 4
+    vim.bo.shiftwidth = 2
     -- Set how many spaces a tab counts for
-    vim.bo.softtabstop = 4
+    vim.bo.softtabstop = 2
   end,
 })
 
-vim.bo.tabstop = 4
-vim.bo.softtabstop = 4
-vim.bo.shiftwidth = 4
+vim.bo.tabstop = 2
+vim.bo.softtabstop = 2
+vim.bo.shiftwidth = 2
 -- Preview substitutions live, as you type!
 vim.opt.inccommand = 'split'
 
@@ -214,7 +214,7 @@ vim.opt.scrolloff = 20
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 -- cargo commands
 --
-vim.keymap.set('n', '<Leader>cc', "<cmd>lua vim.cmd('Cargo check')<CR>", { desc = 'Cargo check' })
+vim.keymap.set('n', '<Leader>cc', "<cmd>lua vim.cmd('Cargo clippy')<CR>", { desc = 'Cargo clippy' })
 vim.keymap.set('n', '<Leader>cr', "<cmd>lua vim.cmd('Cargo run')<CR>", { desc = 'Cargo run' })
 -- bash commands
 vim.keymap.set('n', '<Leader>hh', ':!chmod +x %<CR>', { silent = true, desc = 'Make bash executable' })
@@ -345,17 +345,17 @@ vim.api.nvim_create_user_command('BiomeInit', function()
 end, {})
 vim.keymap.set('n', '<leader>bb', ':BiomeInit<CR>', { noremap = true, silent = true, desc = 'Create biome.json' })
 -- Zig specific keymaps
--- vim.keymap.set('n', '<leader>zb', ':!zig build<CR>', opts)
--- vim.keymap.set('n', '<leader>zr', ':!zig build run<CR>', opts)
--- vim.keymap.set('n', '<leader>zt', ':!zig test<CR>', opts)
--- vim.keymap.set('n', '<leader>zf', ':!zig fmt %<CR>', opts)
+vim.keymap.set('n', '<leader>zb', ':!zig build<CR>')
+vim.keymap.set('n', '<leader>zr', ':!zig build run<CR>')
+vim.keymap.set('n', '<leader>zt', ':!zig test<CR>')
+vim.keymap.set('n', '<leader>zf', ':!zig fmt %<CR>')
 -- C++ commands
 -- C++ compilation and execution
 --
 vim.keymap.set('n', '<Leader>rc', function()
   local filename = vim.fn.expand '%:p'
   local output = vim.fn.expand '%:p:r'
-  local cmd = string.format('!g++ -std=c++17 "%s" -o "%s"', filename, output)
+  local cmd = string.format('!g++ -Wall -Wextra -pedantic -std=c++17 "%s" -o "%s"', filename, output)
   vim.cmd(cmd)
 end, { desc = 'Compile C++' })
 
@@ -858,6 +858,7 @@ require('lazy').setup({
             '--background-index',
             '--clang-tidy',
             '--completion-style=detailed',
+            '--header-insertion=iwyu',
             '--header-insertion-decorators',
             '--offset-encoding=utf-16', -- This helps with encoding issues
             '--enable-config', -- This will enable reading from .clangd
@@ -970,6 +971,46 @@ require('lazy').setup({
             },
           },
         },
+        gopls = {
+          cmd = { 'gopls' },
+          filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
+          settings = {
+            gopls = {
+              gofumpt = true,
+              codelenses = {
+                gc_details = false,
+                generate = true,
+                regenerate_cgo = true,
+                run_govulncheck = true,
+                test = true,
+                tidy = true,
+                upgrade_dependency = true,
+                vendor = true,
+              },
+              hints = {
+                assignVariableTypes = true,
+                compositeLiteralFields = true,
+                compositeLiteralTypes = true,
+                constantValues = true,
+                functionTypeParameters = true,
+                parameterNames = true,
+                rangeVariableTypes = true,
+              },
+              analyses = {
+                fieldalignment = true,
+                nilness = true,
+                unusedparams = true,
+                unusedwrite = true,
+                useany = true,
+              },
+              usePlaceholders = true,
+              completeUnimported = true,
+              staticcheck = true,
+              directoryFilters = { '-.git', '-.vscode', '-.idea', '-.vscode-test', '-node_modules' },
+              semanticTokens = true,
+            },
+          },
+        },
         rust_analyzer = {
           auto_attach = true,
           settings = {
@@ -979,13 +1020,37 @@ require('lazy').setup({
               parameterHints = true,
               chainingHints = true,
             },
+            checkOnSave = {
+              command = 'clippy',
+              extraArgs = { '--all', '---all-features' },
+              allTargets = false,
+            },
             cargo = {
               allFeatures = true,
               loadOutDirsFromCheck = true,
               runBuildScripts = true,
             },
+            diagnostics = {
+              enable = true,
+              experimental = {
+                enable = true,
+              },
+            },
             procMacro = {
               enable = true,
+              attributes = {
+                enable = true,
+              },
+            },
+            experimental = {
+              procAttrMacros = false,
+            },
+            completion = {
+              addCallArgumentSnippets = true,
+              addCallParenthesis = true,
+              postfix = {
+                enable = true,
+              },
             },
           },
         },
@@ -1316,34 +1381,34 @@ require('lazy').setup({
   },
 })
 -- Create a basic solhint configuration if it doesn't exist
-local function setup_solhint()
-  local project_root = vim.fn.getcwd()
-  local solhint_config = project_root .. '/.solhint.json'
-
-  if vim.fn.filereadable(solhint_config) == 0 then
-    local config = [[
-{
-"extends": "solhint:recommended",
-  "rules": {
-    "compiler-version": ["error", "^0.8.0"],
-    "func-visibility": ["warn", {"ignoreConstructors": true}],
-    "no-unused-import": "warn",
-    "foundry-import": "off",
-    "no-empty-blocks": "off"
-  }
-}
-]]
-    vim.fn.writefile(vim.fn.split(config, '\n'), solhint_config)
-    print 'Created default .solhint.json in your home directory'
-  end
-end
-
--- Run the setup function after Neovim is initialized
-vim.api.nvim_create_autocmd('VimEnter', {
-  callback = function()
-    setup_solhint()
-  end,
-})
+-- local function setup_solhint()
+--   local project_root = vim.fn.getcwd()
+--   local solhint_config = project_root .. '/.solhint.json'
+--
+--   if vim.fn.filereadable(solhint_config) == 0 then
+--     local config = [[
+-- {
+-- "extends": "solhint:recommended",
+--   "rules": {
+--     "compiler-version": ["error", "^0.8.0"],
+--     "func-visibility": ["warn", {"ignoreConstructors": true}],
+--     "no-unused-import": "warn",
+--     "foundry-import": "off",
+--     "no-empty-blocks": "off"
+--   }
+-- }
+-- ]]
+--     vim.fn.writefile(vim.fn.split(config, '\n'), solhint_config)
+--     print 'Created default .solhint.json in your home directory'
+--   end
+-- end
+--
+-- -- Run the setup function after Neovim is initialized
+-- vim.api.nvim_create_autocmd('VimEnter', {
+--   callback = function()
+--     setup_solhint()
+--   end,
+-- })
 -- Load Solidity configuration
 require('solidity_setup').setup()
 
