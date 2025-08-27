@@ -1,22 +1,22 @@
 vim.opt.termguicolors = true
--- vim.cmd 'colorscheme gotham'
+vim.cmd 'colorscheme spaceduck'
+vim.cmd [[
+  highlight Normal guibg=NONE ctermbg=NONE
+  highlight NonText guibg=NONE ctermbg=NONE
+]]
 -- Ensure statusline is always loaded
 vim.g.neovide_opacity = 0.90
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
--- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
 -- vim.o.guifont = 'JetBrainsMono Nerd Font:h11'
-vim.o.guifont = 'CaskaydiaCove Nerd Font Propo:h11'
--- vim.o.guifont = 'UbuntuMono Nerd Font:h11'
-
+-- vim.o.guifont = 'CaskaydiaCove Nerd Font Propo:h11'
+vim.o.guifont = 'FiraCode Nerd Font:h12'
+-- Set NotifyBackground highlight group
 if vim.g.neovide then
   vim.g.neovide_fullscreen = true
 end
--- For specific transparency level
--- [[ Setting options ]]
--- See `:help vim.opt`
 --Terminal:
 -- Create a global table for our terminal functions
 _G.terminal_utils = {}
@@ -160,9 +160,6 @@ vim.opt.timeoutlen = 300
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 
--- Sets how neovim will display certain whitespace characters in the editor.
---  See `:help 'list'`
---  and `:help 'listchars'`
 vim.opt.list = true
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
@@ -213,50 +210,11 @@ vim.opt.scrolloff = 20
 --  See `:help hlsearch`
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 -- cargo commands
---
 vim.keymap.set('n', '<Leader>cc', "<cmd>lua vim.cmd('Cargo clippy')<CR>", { desc = 'Cargo clippy' })
 vim.keymap.set('n', '<Leader>cr', "<cmd>lua vim.cmd('Cargo run')<CR>", { desc = 'Cargo run' })
 -- bash commands
 vim.keymap.set('n', '<Leader>hh', ':!chmod +x %<CR>', { silent = true, desc = 'Make bash executable' })
 vim.keymap.set('n', '<Leader>hr', ':!%<CR>', { silent = true, desc = 'Run bash executable' })
--- Solidity and foundry
-vim.keymap.set('n', '<leader>sc', ":!solc --bin <C-r>=expand('%p')<CR><CR>", { silent = true, desc = 'Compile solidity with solc' })
-vim.keymap.set('n', '<leader>fb', ':!forge build<CR>', { silent = true, desc = 'Forge build' })
-vim.keymap.set('n', '<leader>fd', ":!forge script <C-r>=expand('%:p')<CR><CR>", { silent = true, desc = 'Run forge script (current file)' })
-vim.keymap.set('n', '<leader>ft', ':!forge test<CR>', { silent = true, desc = 'Run forge tests' })
-vim.keymap.set('n', '<leader>fT', ':!forge test -vv<CR>', { silent = true, desc = 'Run forge tests (verbose)' })
-vim.keymap.set('n', '<leader>fc', ':!forge coverage<CR>', { silent = true, desc = 'Run forge coverage' })
-vim.keymap.set('n', '<leader>fs', ':!forge snapshot<CR>', { silent = true, desc = 'Run forge snapshot' })
-vim.keymap.set('n', '<leader>fm', ':!forge fmt<CR>', { silent = true, desc = 'Run forge fmt' })
-vim.keymap.set(
-  'n',
-  '<leader>js',
-  [[:exe "new .solhint.json" | exe "normal i" . substitute('{"extends": "solhint:recommended","rules": {"compiler-version": ["warn"],"func-name-mixedcase": ["warn"],"imports-on-top": ["warn"],"contract-name-camelcase": ["warn"],"no-empty-blocks": ["warn"],"not-rely-on-time": ["warn"]}}', "'", "''", 'g') | exe "normal! gg=G" | exe "w" | exe "bd"]],
-  { silent = true, desc = 'Create a solhint json' }
-)
--- Keymappings for Solana development
--- Solana CLI keybindings
-vim.keymap.set('n', '<leader>sa', ':!solana address<CR>', { silent = true, desc = 'Show Solana public key' })
-vim.keymap.set('n', '<leader>sb', ':!solana balance<CR>', { silent = true, desc = 'Check SOL balance' })
-vim.keymap.set('n', '<leader>spd', ':!solana program deploy<CR>', { silent = true, desc = 'Deploy Solana program' })
-vim.keymap.set('n', '<leader>stv', ':!solana-test-validator<CR>', { silent = true, desc = 'Start Solana test validator' })
-
--- Anchor keybindings
-vim.keymap.set('n', '<leader>ab', ':!anchor build<CR>', { silent = true, desc = 'Build Anchor program' })
-vim.keymap.set('n', '<leader>ad', ':!anchor deploy<CR>', { silent = true, desc = 'Deploy Anchor program' })
-vim.keymap.set('n', '<leader>att', ':!anchor test<CR>', { silent = true, desc = 'Run Anchor tests' })
-vim.keymap.set('n', '<leader>ats', ':!anchor test --skip-local-validator<CR>', { silent = true, desc = 'Run Anchor tests without validator' })
-vim.keymap.set('n', '<leader>ai', ':!anchor init<CR>', { silent = true, desc = 'Initialize new Anchor project' })
-vim.keymap.set('n', '<leader>ar', ':!anchor run<CR>', { silent = true, desc = 'Run Anchor script' })
-vim.keymap.set('n', '<leader>av', ':!anchor verify<CR>', { silent = true, desc = 'Verify Anchor program' })
-
--- Custom commands for Solidity
-vim.api.nvim_create_user_command('ForgeDeploy', function()
-  local address = vim.fn.input('RPC URL: ', 'http://127.0.0.1:8545')
-  local contract = vim.fn.expand '%:t:r' -- Gets filename without extension
-  vim.cmd('!forge create ' .. contract .. ' --rpc-url ' .. address .. ' --interactive --broadcast')
-end, {})
-
 -- Solidity filetype detection
 vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
   pattern = '*.sol',
@@ -298,11 +256,6 @@ function _G.toggle_anvil()
     end
   end
 end
--- TypeScript specific commands
--- vim.keymap.set('n', '<Leader>ts', ':Term npm run start<CR>', { noremap = true, silent = true, desc = 'Run TS start script' })
--- vim.keymap.set('n', '<Leader>tr', ':Term npm run build<CR>', { noremap = true, silent = true, desc = 'Build TS project' })
--- vim.keymap.set('n', '<Leader>tn', ':Term npx ts-node %<CR>', { noremap = true, silent = true, desc = 'Run current TS file' })
--- vim.keymap.set('n', '<Leader>td', ':Term npm run dev<CR>', { noremap = true, silent = true, desc = 'Run TS dev server' })
 vim.api.nvim_create_user_command('BiomeInit', function()
   local biome_config = [[
 {
@@ -349,6 +302,7 @@ vim.keymap.set('n', '<leader>zb', ':!zig build<CR>')
 vim.keymap.set('n', '<leader>zr', ':!zig build run<CR>')
 vim.keymap.set('n', '<leader>zt', ':!zig test<CR>')
 vim.keymap.set('n', '<leader>zf', ':!zig fmt %<CR>')
+
 -- C++ commands
 -- C++ compilation and execution
 --
@@ -414,6 +368,7 @@ vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left wind
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+
 --Bufferline
 -- Keymaps for bufferline navigation
 vim.keymap.set('n', '<Tab>', ':BufferNext<CR>', { silent = true, desc = 'Next Buffer' })
@@ -421,28 +376,32 @@ vim.keymap.set('n', '<S-Tab>', ':BufferPrevious<CR>', { silent = true, desc = 'P
 vim.keymap.set('n', '<leader>bp', ':BufferLinePick<CR>', { silent = true, desc = 'Pick Buffer' })
 vim.keymap.set('n', '<leader>bd', ':bdelete<CR>', { silent = true, desc = 'Close Buffer' })
 
--- [[ Basic Autocommands ]]
---  See `:help lua-guide-autocommands`
-
--- Highlight when yanking (copying) text
---  Try it with `yap` in normal mode
---  See `:help vim.highlight.on_yank()`
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
   group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
   callback = function()
-    vim.highlight.on_yank()
+    vim.hl.on_yank()
   end,
 })
 
--- Assembly file detection
 vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
   pattern = { '*.asm', '*.nasm' },
   callback = function()
-    vim.opt_local.filetype = 'nasm'
+    vim.opt_local.expandtab = false
+    vim.opt_local.tabstop = 8
+    vim.opt_local.shiftwidth = 8
+
+    vim.opt_local.number = true
+    vim.opt_local.relativenumber = true
+
+    -- Highlight current line
+    vim.opt_local.cursorline = true
+
+    -- Enable folding based on indentation
+    vim.opt_local.foldmethod = 'indent'
   end,
 })
--- [[ Install `lazy.nvim` plugin manager ]]
+
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
@@ -453,11 +412,9 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
--- Make sure you have the FloatBorder highlight group defined
 local border = 'rounded'
 vim.api.nvim_set_hl(0, 'FloatBorder', { fg = '#3b4261' }) -- Adjust color as needed
 
--- Then configure the handlers
 vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, {
   border = border,
   max_width = 80,
@@ -467,7 +424,6 @@ vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.s
   border = border,
 })
 
--- [[ Configure and install plugins ]]
 --
 require('lazy').setup({
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
@@ -540,7 +496,7 @@ require('lazy').setup({
   { -- Fuzzy Finder (files, lsp, etc)
     'nvim-telescope/telescope.nvim',
     event = 'VimEnter',
-    branch = '0.1.x',
+    branch = 'master',
     dependencies = {
       'nvim-lua/plenary.nvim',
       { -- If encountering errors, see telescope-fzf-native README for installation instructions
@@ -555,22 +511,12 @@ require('lazy').setup({
       },
       { 'nvim-telescope/telescope-ui-select.nvim' },
 
-      -- Useful for getting pretty icons, but requires a Nerd Font.
       { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
     },
     config = function()
       -- [[ Configure Telescope ]]
       -- See `:help telescope` and `:help telescope.setup()`
       require('telescope').setup {
-        -- You can put your default mappings / updates / etc. in here
-        --  All the info you're looking for is in `:help telescope.setup()`
-        --
-        -- defaults = {
-        --   mappings = {
-        --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
-        --   },
-        -- },
-        -- pickers = {}
         extensions = {
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
@@ -595,17 +541,13 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
 
-      -- Slightly advanced example of overriding default behavior and theme
       vim.keymap.set('n', '<leader>/', function()
-        -- You can pass additional configuration to Telescope to change the theme, layout, etc.
         builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
           winblend = 10,
           previewer = true,
         })
       end, { desc = '[/] Fuzzily search in current buffer' })
 
-      -- It's also possible to pass additional configuration options.
-      --  See `:help telescope.builtin.live_grep()` for information about particular keys
       vim.keymap.set('n', '<leader>s/', function()
         builtin.live_grep {
           grep_open_files = true,
@@ -613,7 +555,6 @@ require('lazy').setup({
         }
       end, { desc = '[S]earch [/] in Open Files' })
 
-      -- Shortcut for searching your Neovim configuration files
       vim.keymap.set('n', '<leader>sn', function()
         builtin.find_files { cwd = vim.fn.stdpath 'config' }
       end, { desc = '[S]earch [N]eovim files' })
@@ -622,48 +563,32 @@ require('lazy').setup({
 
   -- LSP Plugins
   {
-    -- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins
-    -- used for completion, annotations and signatures of Neovim apis
     'folke/lazydev.nvim',
     ft = 'lua',
     opts = {
       library = {
-        -- Load luvit types when the `vim.uv` word is found
         { path = 'luvit-meta/library', words = { 'vim%.uv' } },
       },
     },
   },
   { 'Bilal2453/luvit-meta', lazy = true },
   {
-    -- Main LSP Configuration
     'neovim/nvim-lspconfig',
     event = { 'BufReadPost', 'BufNewFile' },
 
     dependencies = {
-      -- Automatically install LSPs and related tools to stdpath for Neovim
       { 'williamboman/mason.nvim', config = true }, -- NOTE: Must be loaded before dependants
       'williamboman/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
 
-      -- Useful status updates for LSP.
       { 'j-hui/fidget.nvim', opts = {} },
 
-      -- Allows extra capabilities provided by nvim-cmp
       'hrsh7th/cmp-nvim-lsp',
     },
     config = function()
-      --  This function gets run when an LSP attaches to a particular buffer.
-      --    That is to say, every time a new file is opened that is associated with
-      --    an lsp (for example, opening `main.rs` is associated with `rust_analyzer`) this
-      --    function will be executed to configure the current buffer
       vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
         callback = function(event)
-          -- NOTE: Remember that Lua is a real programming language, and as such it is possible
-          -- to define small helper and utility functions so you don't have to repeat yourself.
-          --
-          -- In this case, we create a function that lets us more easily define mappings specific
-          -- for LSP related items. It sets the mode, buffer and description for us each time.
           local map = function(keys, func, desc, mode)
             mode = mode or 'n'
             vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
@@ -688,7 +613,7 @@ require('lazy').setup({
           map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
 
           local client = vim.lsp.get_client_by_id(event.data.client_id)
-          if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
+          if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
             local highlight_augroup = vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })
             vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
               buffer = event.buf,
@@ -711,7 +636,7 @@ require('lazy').setup({
             })
           end
 
-          if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
+          if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
             map('<leader>th', function()
               vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
             end, '[T]oggle Inlay [H]ints')
@@ -719,7 +644,6 @@ require('lazy').setup({
         end,
       })
 
-      -- Change diagnostic symbols in the sign column (gutter)
       if vim.g.have_nerd_font then
         local signs = { ERROR = '', WARN = '', INFO = '', HINT = '' }
         local diagnostic_signs = {}
@@ -728,29 +652,22 @@ require('lazy').setup({
         end
         vim.diagnostic.config { signs = { text = diagnostic_signs } }
       end
-      -- vim.diagnostic.config { virtual_lines = true }
       vim.diagnostic.config {
         virtual_text = {
           virt_text_pos = 'eol',
         },
       }
-      -- LSP servers and clients are able to communicate to each other what features they support.
-      --  By default, Neovim doesn't support everything that is in the LSP specification.
-      --  When you add nvim-cmp, luasnip, etc. Neovim now has *more* capabilities.
-      --  So, we create new capabilities with nvim cmp, and then broadcast that to the servers.
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
+      capabilities.offsetEncoding = { 'utf-16' }
       local util = require 'lspconfig/util'
 
-      -- Solidity snippets (using LuaSnip)
       local ls = require 'luasnip'
       local s = ls.snippet
       local t = ls.text_node
       local i = ls.insert_node
-      -- local f = ls.function_node
 
       ls.add_snippets('solidity', {
-        -- Contract snippet
         s('contract', {
           t '// SPDX-License-Identifier: MIT',
           t { '', 'pragma solidity ^0.8.20;', '', 'contract ' },
@@ -761,7 +678,6 @@ require('lazy').setup({
           t { '', '}' },
         }),
 
-        -- Function snippet
         s('func', {
           t 'function ',
           i(1, 'name'),
@@ -777,7 +693,6 @@ require('lazy').setup({
           t { '', '}' },
         }),
 
-        -- Event snippet
         s('event', {
           t 'event ',
           i(1, 'Name'),
@@ -787,7 +702,6 @@ require('lazy').setup({
           i(0),
         }),
 
-        -- Error snippet
         s('error', {
           t 'error ',
           i(1, 'Name'),
@@ -797,7 +711,6 @@ require('lazy').setup({
           i(0),
         }),
 
-        -- Struct snippet
         s('struct', {
           t 'struct ',
           i(1, 'Name'),
@@ -807,7 +720,6 @@ require('lazy').setup({
           t { '', '}' },
         }),
 
-        -- Import snippet
         s('imp', {
           t 'import "',
           i(1, './Contract.sol'),
@@ -815,7 +727,6 @@ require('lazy').setup({
           i(0),
         }),
 
-        -- Require snippet
         s('req', {
           t 'require(',
           i(1, 'condition'),
@@ -825,7 +736,6 @@ require('lazy').setup({
           i(0),
         }),
 
-        -- Constructor snippet
         s('constructor', {
           t 'constructor(',
           i(1),
@@ -837,7 +747,6 @@ require('lazy').setup({
           t { '', '}' },
         }),
 
-        -- Mapping snippet
         s('mapping', {
           t 'mapping(',
           i(1, 'key'),
@@ -860,27 +769,76 @@ require('lazy').setup({
             '--completion-style=detailed',
             '--header-insertion=iwyu',
             '--header-insertion-decorators',
-            '--offset-encoding=utf-16', -- This helps with encoding issues
-            '--enable-config', -- This will enable reading from .clangd
-            -- '--sort-includes=never', -- This will prevent include sorting
+            '--offset-encoding=utf-16',
+            '--enable-config',
+            '--pch-storage=memory', -- Faster PCH storage
+            '--cross-file-rename', -- Enable cross-file renaming
+            '--suggest-missing-includes', -- Suggest missing includes
+            '--all-scopes-completion', -- Complete symbols from all scopes
+            '--function-arg-placeholders', -- Show function argument placeholders
+            '--fallback-style=LLVM', -- Fallback formatting style
           },
           init_options = {
             usePlaceholders = true,
             completeUnimported = true,
             clangdFileStatus = true,
-            formatStyle = 'file',
-            includeStyle = 'LLVM',
-            sortIncludes = false,
+            fallbackFlags = { '-std=c++17' }, -- Default C++ standard
           },
           filetypes = { 'c', 'cpp', 'objc', 'objcpp', 'cuda', 'proto' },
-          root_dir = util.root_pattern('.clangd', '.clang-tidy', '.clang-format', 'compile_commands.json', 'compile_flags.txt', 'configure.ac', '.git'),
+          root_dir = require('lspconfig').util.root_pattern(
+            '.clangd',
+            '.clang-tidy',
+            '.clang-format',
+            'compile_commands.json',
+            'compile_flags.txt',
+            'configure.ac',
+            'CMakeLists.txt',
+            '.git'
+          ),
           single_file_support = true,
           settings = {
             clangd = {
+              semanticHighlighting = true,
               inlayHints = {
-                parameterNames = true,
-                deducedTypes = true,
+                parameterNames = {
+                  enabled = true,
+                  suppressWhenArgumentMatchesName = false,
+                },
+                deducedTypes = {
+                  enabled = true,
+                },
+                designatedInitializers = true,
+                blockEnd = true,
               },
+              completion = {
+                allScopes = true,
+              },
+              hover = {
+                showAKA = true,
+              },
+            },
+          },
+          commands = {
+            ClangdSwitchSourceHeader = {
+              function()
+                vim.lsp.buf.execute_command {
+                  command = 'clangd.switchheader',
+                }
+              end,
+              description = 'Switch between source and header file',
+            },
+          },
+        },
+
+        cmake = {
+          filetypes = { 'cmake' },
+          highlight = true,
+          init_options = {
+            buildDirectory = 'build',
+          },
+          settings = {
+            cmake = {
+              configureOnOpen = true,
             },
           },
         },
@@ -897,20 +855,17 @@ require('lazy').setup({
                 typeCheckingMode = 'basic',
                 extraPaths = {},
               },
-              -- Use a string value instead of a function for pythonPath
               pythonPath = '', -- This will use the default Python path
             },
           },
           on_init = function(client)
             -- Dynamically determine Python path when the LSP initializes
             local function get_python_path()
-              -- Try Poetry first
               local poetry_path = vim.fn.trim(vim.fn.system 'poetry env info --path 2>/dev/null')
               if poetry_path ~= '' and vim.v.shell_error == 0 then
                 return poetry_path .. '/bin/python'
               end
 
-              -- Try to find local virtual environments
               local venv_paths = {
                 vim.fn.getcwd() .. '/.venv',
                 vim.fn.getcwd() .. '/venv',
@@ -923,13 +878,11 @@ require('lazy').setup({
                 end
               end
 
-              -- Fall back to system Python
               return vim.fn.exepath 'python'
             end
 
-            -- Update the python path in client settings
             client.config.settings.python.pythonPath = get_python_path()
-            client.notify('workspace/didChangeConfiguration', { settings = client.config.settings })
+            client:notify('workspace/didChangeConfiguration', { settings = client.config.settings })
           end,
           single_file_support = true,
         },
@@ -1012,6 +965,7 @@ require('lazy').setup({
           },
         },
         rust_analyzer = {
+          capabilities = capabilities,
           auto_attach = true,
           settings = {
             inlayHints = {
@@ -1090,7 +1044,6 @@ require('lazy').setup({
         'stylua', -- Used to format Lua code
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
-
       require('mason-lspconfig').setup {
         handlers = {
           function(server_name)
@@ -1141,6 +1094,19 @@ require('lazy').setup({
         -- Conform can also run multiple formatters sequentially
         blade = { 'blade-formatter' },
         python = { 'black' },
+        cpp = { 'clang-format' },
+        c = { 'clang-format' },
+        cmake = { 'cmake_format' },
+        asm = { 'asmfmt' },
+        go = { 'gofmt' },
+      },
+      formatters = {
+        ['clang-format'] = {
+          prepend_args = {
+            '--style=file', -- Use .clang-format file if available
+            '--fallback-style=LLVM',
+          },
+        },
       },
     },
   },
@@ -1148,7 +1114,6 @@ require('lazy').setup({
     'hrsh7th/nvim-cmp',
     event = 'InsertEnter',
     dependencies = {
-      -- Snippet Engine & its associated nvim-cmp source
       {
         'L3MON4D3/LuaSnip',
         build = (function()
@@ -1172,7 +1137,6 @@ require('lazy').setup({
       'hrsh7th/cmp-path',
     },
     config = function()
-      -- See `:help cmp`
       local cmp = require 'cmp'
       local luasnip = require 'luasnip'
       luasnip.config.setup {}
@@ -1186,38 +1150,14 @@ require('lazy').setup({
         completion = { completeopt = 'menu,menuone,noinsert' },
 
         mapping = cmp.mapping.preset.insert {
-          -- Select the [n]ext item
-          -- ['<C-n>'] = cmp.mapping.select_next_item(),
-          -- Select the [p]revious item
-          -- ['<C-p>'] = cmp.mapping.select_prev_item(),
-
-          -- Scroll the documentation window [b]ack / [f]orward
           ['<C-b>'] = cmp.mapping.scroll_docs(-4),
           ['<C-f>'] = cmp.mapping.scroll_docs(4),
 
-          -- Accept ([y]es) the completion.
-          --  This will auto-import if your LSP supports it.
-          --  This will expand snippets if the LSP sent a snippet.
           ['<CR>'] = cmp.mapping.confirm { select = true },
-          -- If you prefer more traditional completion keymaps,
-          -- you can uncomment the following lines
-          -- ['<CR>'] = cmp.mapping.confirm { select = true },
           ['<Tab>'] = cmp.mapping.select_next_item(),
           ['<S-Tab>'] = cmp.mapping.select_prev_item(),
 
-          -- Manually trigger a completion from nvim-cmp.
-          --  Generally you don't need this, because nvim-cmp will display
-          --  completions whenever it has completion options available.
           ['<C-Space>'] = cmp.mapping.complete {},
-
-          -- Think of <c-l> as moving to the right of your snippet expansion.
-          --  So if you have a snippet that's like:
-          --  function $name($args)
-          --    $body
-          --  end
-          --
-          -- <c-l> will move you to the right of each of the expansion locations.
-          -- <c-h> is similar, except moving you backwards.
           ['<C-l>'] = cmp.mapping(function()
             if luasnip.expand_or_locally_jumpable() then
               luasnip.expand_or_jump()
@@ -1232,7 +1172,6 @@ require('lazy').setup({
         sources = {
           {
             name = 'lazydev',
-            -- set group index to 0 to skip loading LuaLS completions as lazydev recommends it
             group_index = 0,
           },
           { name = 'nvim_lsp' },
@@ -1242,48 +1181,26 @@ require('lazy').setup({
       }
     end,
   },
-  -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = { 'BufReadPost', 'BufNewFile' }, dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
 
-  { -- Collection of various small independent plugins/modules
+  {
     'echasnovski/mini.nvim',
     config = function()
-      -- Better Around/Inside textobjects
-      --
-      -- Examples:
-      --  - va)  - [V]isually select [A]round [)]paren
-      --  - yinq - [Y]ank [I]nside [N]ext [Q]uote
-      --  - ci'  - [C]hange [I]nside [']quote
       require('mini.ai').setup { n_lines = 500 }
 
-      -- Add/delete/replace surroundings (brackets, quotes, etc.)
-      --
-      -- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
-      -- - sd'   - [S]urround [D]elete [']quotes
-      -- - sr)'  - [S]urround [R]eplace [)] [']
       require('mini.surround').setup()
 
       -- Simple and easy statusline.
-      --  You could remove this setup call if you don't like it,
-      --  and try some other statusline plugin
       local statusline = require 'mini.statusline'
-      -- set use_icons to true if you have a Nerd Font
       statusline.setup { use_icons = vim.g.have_nerd_font }
 
-      -- You can configure sections in the statusline by overriding their
-      -- default behavior. For example, here we set the section for
-      -- cursor location to LINE:COLUMN
       ---@diagnostic disable-next-line: duplicate-set-field
       statusline.section_location = function()
         return '%2l:%-2v'
       end
-
-      -- ... and there is more!
-      --  Check out: https://github.com/echasnovski/mini.nvim
     end,
   },
   { 'TovarishFin/vim-solidity', ft = 'solidity' },
-  -- { 'iden3/vim-ethereum-parity', ft = 'solidity' },
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     event = { 'BufReadPost', 'BufNewFile' },
@@ -1301,6 +1218,8 @@ require('lazy').setup({
       ensure_installed = {
         'bash',
         'c',
+        'cpp',
+        'cmake',
         'diff',
         'html',
         'lua',
@@ -1318,29 +1237,11 @@ require('lazy').setup({
       auto_install = true,
       highlight = {
         enable = true,
-        -- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
-        --  If you are experiencing weird indenting issues, add the language to
-        --  the list of additional_vim_regex_highlighting and disabled languages for indent.
         additional_vim_regex_highlighting = { 'ruby' },
       },
       indent = { enable = true, disable = { 'ruby' } },
     },
-    -- There are additional nvim-treesitter modules that you can use to interact
-    -- with nvim-treesitter. You should go explore a few and see what interests you:
-    --
-    --    - Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
-    --    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
-    --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
   },
-
-  -- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
-  -- init.lua. If you want these files, they are in the repository, so you can just download them and
-  -- place them in the correct locations.
-
-  -- NOTE: Next step on your Neovim journey: Add/Configure additional plugins for Kickstart
-  --
-  --  Here are some example plugins that I've included in the Kickstart repository.
-  --  Uncomment any of the lines below to enable them (you will need to restart nvim).
   --
   require 'kickstart.plugins.debug',
   require 'kickstart.plugins.indent_line',
@@ -1349,20 +1250,9 @@ require('lazy').setup({
   require 'kickstart.plugins.neo-tree',
   require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
-  -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
-  --    This is the easiest way to modularize your config.
-  --
-  --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
   { import = 'custom.plugins' },
-  --
-  -- For additional information with loading, sourcing and examples see `:help lazy.nvim-🔌-plugin-spec`
-  -- Or use telescope!
-  -- In normal mode type `<space>sh` then write `lazy.nvim-plugin`
-  -- you can continue same window with `<space>sr` which resumes last telescope search
 }, {
   ui = {
-    -- If you are using a Nerd Font: set icons to an empty table which will use the
-    -- default lazy.nvim defined Nerd Font icons, otherwise define a unicode icons table
     icons = vim.g.have_nerd_font and {} or {
       cmd = '⌘',
       config = '🛠',
@@ -1380,35 +1270,6 @@ require('lazy').setup({
     },
   },
 })
--- Create a basic solhint configuration if it doesn't exist
--- local function setup_solhint()
---   local project_root = vim.fn.getcwd()
---   local solhint_config = project_root .. '/.solhint.json'
---
---   if vim.fn.filereadable(solhint_config) == 0 then
---     local config = [[
--- {
--- "extends": "solhint:recommended",
---   "rules": {
---     "compiler-version": ["error", "^0.8.0"],
---     "func-visibility": ["warn", {"ignoreConstructors": true}],
---     "no-unused-import": "warn",
---     "foundry-import": "off",
---     "no-empty-blocks": "off"
---   }
--- }
--- ]]
---     vim.fn.writefile(vim.fn.split(config, '\n'), solhint_config)
---     print 'Created default .solhint.json in your home directory'
---   end
--- end
---
--- -- Run the setup function after Neovim is initialized
--- vim.api.nvim_create_autocmd('VimEnter', {
---   callback = function()
---     setup_solhint()
---   end,
--- })
 -- Load Solidity configuration
 require('solidity_setup').setup()
 
@@ -1481,5 +1342,47 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.bo.autoindent = true -- Copy indent from current line when starting a new line
   end,
 })
--- The line beneath this is called `modeline`. See `:help modeline`
--- vim: ts=2 sts=2 sw=2 et
+vim.api.nvim_create_user_command('ClangFormat', function()
+  local clang_format_config = [[
+---
+Language: Cpp
+BasedOnStyle: LLVM
+IndentWidth: 2
+TabWidth: 2
+UseTab: Never
+ColumnLimit: 100
+BreakBeforeBraces: Attach
+AllowShortIfStatementsOnASingleLine: WithoutElse
+AllowShortLoopsOnASingleLine: true
+AllowShortFunctionsOnASingleLine: Empty
+IndentCaseLabels: true
+SpaceBeforeParens: ControlStatements
+SpaceInEmptyParentheses: false
+SpaceAfterCStyleCast: false
+SpaceBeforeAssignmentOperators: true
+KeepEmptyLinesAtTheStartOfBlocks: false
+MaxEmptyLinesToKeep: 1
+AccessModifierOffset: -2
+NamespaceIndentation: None
+ConstructorInitializerIndentWidth: 4
+ContinuationIndentWidth: 4
+BinPackArguments: false
+BinPackParameters: false
+AllowAllArgumentsOnNextLine: false
+AllowAllParametersOfDeclarationOnNextLine: false
+PackConstructorInitializers: Never
+AlignConsecutiveDeclarations: Consecutive
+AlignConsecutiveAssignments: Consecutive
+AlignConsecutiveMacros: Consecutive
+ColumnLimit: 80
+]]
+
+  local file = io.open('.clang-format', 'w')
+  if file then
+    file:write(clang_format_config)
+    file:close()
+    print 'Created .clang-format configuration'
+  else
+    print 'Failed to create .clang-format'
+  end
+end, {})

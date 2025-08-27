@@ -5,6 +5,37 @@
 --   end,
 -- }
 -- return {
+--   'rose-pine/neovim',
+--   name = 'rose-pine',
+--   config = function()
+--     vim.cmd 'colorscheme rose-pine'
+--   end,
+-- }
+return {
+  'rebelot/kanagawa.nvim',
+  config = function()
+    vim.cmd 'colorscheme kanagawa-wave'
+  end,
+}
+-- return {
+--   'EdenEast/nightfox.nvim',
+--   lazy = false,
+--   priority = 1000,
+--   config = function()
+--     require('nightfox').setup {
+--       options = {
+--         transparent = true, -- Disable setting background
+--         terminal_colors = true, -- Set terminal colors
+--         dim_inactive = false, -- Non focused panes set to alternative background
+--         module_default = true, -- Default enable value for modules
+--       },
+--     }
+--
+--     -- setup must be called before loading the colorscheme
+--     vim.cmd 'colorscheme duskfox'
+--   end,
+-- }
+-- return {
 --   'ricardoraposo/gruvbox-minor.nvim',
 --   lazy = false,
 --   priority = 1000,
@@ -41,38 +72,19 @@
 --   config = function()
 --     -- Optionally configure and load the colorscheme
 --     -- directly inside the plugin declaration.
---     vim.o.termguicolors = true
+--     -- vim.o.termguicolors = true
 --     --
 --     -- Important! Enable termguicolors for proper color rendering
 --
 --     vim.g.gruvbox_material_enable_italic = true
 --     vim.g.gruvbox_material_dim_inactive_windows = 1
 --     vim.g.gruvbox_material_background = 'hard'
---     -- vim.o.background = 'light'
+--     vim.o.background = 'dark'
 --     -- doesnt work in light mode
 --     -- vim.g.gruvbox_material_transparent_background = 1
 --     vim.g.gruvbox_material_cursor = 'auto'
 --     vim.g.gruvbox_material_inlay_hints_background = 'dimmed'
 --     vim.cmd.colorscheme 'gruvbox-material'
---   end,
--- }
--- return {
---   'atelierbram/Base2Tone-nvim',
---   config = function()
---     vim.cmd.colorscheme 'base2tone_space_dark'
---     vim.api.nvim_set_hl(0, 'Normal', { bg = '#0A0A0A' })
---     vim.api.nvim_set_hl(0, 'NormalFloat', { bg = '#0A0A0A' })
---     vim.api.nvim_set_hl(0, 'SignColumn', { bg = '#0A0A0A' })
---     vim.api.nvim_set_hl(0, 'NormalNC', { bg = '#0A0A0A' })
---     -- Line number colors
---     vim.api.nvim_set_hl(0, 'LineNr', { fg = '#3B4048', bg = '#0A0A0A' })
---     vim.api.nvim_set_hl(0, 'CursorLineNr', { fg = '#528BFF', bg = '#0A0A0A' })
---     vim.api.nvim_set_hl(0, 'TelescopeNormal', { bg = '#0C0E12' })
---     vim.api.nvim_set_hl(0, 'TelescopeBorder', { fg = '#2C313A', bg = '#0C0E12' })
---     vim.api.nvim_set_hl(0, 'TelescopePromptNormal', { bg = '#0E1014' })
---     vim.api.nvim_set_hl(0, 'TelescopePromptBorder', { fg = '#2C313A', bg = '#0E1014' })
---     vim.api.nvim_set_hl(0, 'TelescopePreviewBorder', { fg = '#2C313A', bg = '#0C0E12' })
---     vim.api.nvim_set_hl(0, 'TelescopeResultsBorder', { fg = '#2C313A', bg = '#0C0E12' })
 --   end,
 -- }
 -- return { -- You can easily change to a different colorscheme.
@@ -84,7 +96,8 @@
 --   priority = 1000, -- Make sure to load this before all the other start plugins.
 --   init = function()
 --     require('tokyonight').setup {
---       dim_inactive = true,
+--       dim_inactive = false,
+--       transparent = true,
 --     }
 --     -- Load the colorscheme here.
 --     -- Like many other themes, this one has different styles, and you could load
@@ -94,15 +107,24 @@
 --     vim.cmd.hi 'Comment gui=none'
 --   end,
 -- }
-return {
-  'bluz71/vim-nightfly-colors',
-  name = 'nightfly',
-  lazy = false,
-  priority = 1000,
-  init = function()
-    vim.cmd [[colorscheme nightfly]]
-  end,
-}
+-- return {
+--   'bluz71/vim-nightfly-colors',
+--   name = 'nightfly',
+--   lazy = false,
+--   priority = 1000,
+--
+--   init = function()
+--     vim.cmd [[colorscheme nightfly]]
+--   end,
+-- }
+-- return {
+--   'yashguptaz/calvera-dark.nvim',
+--   lazy = false,
+--   priority = 1000,
+--   config = function()
+--     vim.cmd.colorscheme 'calvera'
+--   end,
+-- }
 -- return {
 --   'catppuccin/nvim',
 --   name = 'catppuccin',
@@ -110,7 +132,7 @@ return {
 --   init = function()
 --     require('catppuccin').setup {
 --       flavour = 'mocha',
---       transparent_background = false,
+--       transparent_background = true,
 --       dim_inactive = {
 --         enabled = false, -- dims the background color of inactive window
 --         shade = 'dark',
