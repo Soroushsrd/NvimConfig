@@ -11,12 +11,12 @@
 --     vim.cmd 'colorscheme rose-pine'
 --   end,
 -- }
-return {
-  'rebelot/kanagawa.nvim',
-  config = function()
-    vim.cmd 'colorscheme kanagawa-wave'
-  end,
-}
+-- return {
+--   'rebelot/kanagawa.nvim',
+--   config = function()
+--     vim.cmd 'colorscheme kanagawa-wave'
+--   end,
+-- }
 -- return {
 --   'EdenEast/nightfox.nvim',
 --   lazy = false,
@@ -77,11 +77,11 @@ return {
 --     -- Important! Enable termguicolors for proper color rendering
 --
 --     vim.g.gruvbox_material_enable_italic = true
---     vim.g.gruvbox_material_dim_inactive_windows = 1
+--     vim.g.gruvbox_material_dim_inactive_windows = 0
 --     vim.g.gruvbox_material_background = 'hard'
 --     vim.o.background = 'dark'
 --     -- doesnt work in light mode
---     -- vim.g.gruvbox_material_transparent_background = 1
+--     vim.g.gruvbox_material_transparent_background = 1
 --     vim.g.gruvbox_material_cursor = 'auto'
 --     vim.g.gruvbox_material_inlay_hints_background = 'dimmed'
 --     vim.cmd.colorscheme 'gruvbox-material'
@@ -125,21 +125,21 @@ return {
 --     vim.cmd.colorscheme 'calvera'
 --   end,
 -- }
--- return {
---   'catppuccin/nvim',
---   name = 'catppuccin',
---   priority = 1000,
---   init = function()
---     require('catppuccin').setup {
---       flavour = 'mocha',
---       transparent_background = true,
---       dim_inactive = {
---         enabled = false, -- dims the background color of inactive window
---         shade = 'dark',
---         percentage = 0.4, -- percentage of the shade to apply to the inactive window
---       },
---     }
---
---     vim.cmd.colorscheme 'catppuccin'
---   end,
--- }
+return {
+  'catppuccin/nvim',
+  name = 'catppuccin',
+  priority = 1000,
+  init = function()
+    require('catppuccin').setup {
+      flavour = 'mocha',
+      transparent_background = true,
+      dim_inactive = {
+        enabled = false, -- dims the background color of inactive window
+        shade = 'dark',
+        percentage = 0.4, -- percentage of the shade to apply to the inactive window
+      },
+    }
+
+    vim.cmd.colorscheme 'catppuccin'
+  end,
+}

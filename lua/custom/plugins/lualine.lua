@@ -6,7 +6,7 @@ return {
   config = function()
     require('lualine').setup {
       options = {
-        theme = 'nightfly', --'pywal', -- or choose a specific theme like 'gruvbox'
+        theme = 'auto', --'pywal', -- or choose a specific theme like 'gruvbox'
         -- theme = {
         --   normal = { c = { fg = '#c5c8c6', bg = '#2d3640' } },
         --   insert = { c = { fg = '#ffffff', bg = '#35a770' } },
@@ -30,15 +30,3 @@ return {
     }
   end,
 }
--- return {
---   'vim-airline/vim-airline',
---   lazy = false,
---   priority = 1000,
---   dependencies = {
---     { 'vim-airline/vim-airline-themes' },
---     { 'ryanoasis/vim-devicons' },
---   },
---   config = function()
---     vim.g.airline_theme = 'spaceduck'
---   end,
--- }

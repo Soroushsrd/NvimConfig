@@ -56,7 +56,16 @@ return {
     -- optional:
     --   `nvim-notify` is only needed, if you want to use the notification view.
     --   if not available, we use `mini` as the fallback
-    'rcarriga/nvim-notify',
+    {
+      'rcarriga/nvim-notify',
+      config = function()
+        require('notify').setup {
+          background_colour = '#000000', -- Set explicit background
+          -- or try:
+          -- background_colour = "Normal", -- Use Normal highlight group
+        }
+      end,
+    },
   },
 
   config = function(_, opts)
