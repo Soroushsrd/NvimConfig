@@ -87,26 +87,37 @@
 --     vim.cmd.colorscheme 'gruvbox-material'
 --   end,
 -- }
--- return { -- You can easily change to a different colorscheme.
---   -- Change the name of the colorscheme plugin below, and then
---   -- change the command in the config to whatever the name of that colorscheme is.
---   --
---   -- If you want to see what colorschemes are already installed, you can use :Telescope colorscheme.
---   'folke/tokyonight.nvim',
---   priority = 1000, -- Make sure to load this before all the other start plugins.
---   init = function()
---     require('tokyonight').setup {
---       dim_inactive = false,
---       transparent = true,
---     }
---     -- Load the colorscheme here.
---     -- Like many other themes, this one has different styles, and you could load
---     -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
---     vim.cmd.colorscheme 'tokyonight-night'
---     -- You can configure highlights by doing something like:
---     vim.cmd.hi 'Comment gui=none'
---   end,
--- }
+return { -- You can easily change to a different colorscheme.
+  'folke/tokyonight.nvim',
+  priority = 1000, -- Make sure to load this before all the other start plugins.
+  init = function()
+    require('tokyonight').setup {
+      dim_inactive = false,
+      transparent = true,
+    }
+    -- Load the colorscheme here.
+    -- Like many other themes, this one has different styles, and you could load
+    -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
+    vim.cmd.colorscheme 'tokyonight-night'
+    -- You can configure highlights by doing something like:
+    vim.cmd.hi 'Comment gui=none'
+    vim.cmd.hi 'NeoTreeNormal guibg=NONE'
+    vim.cmd.hi 'NeoTreeNormalNC guibg=NONE'
+    vim.cmd.hi 'NeoTreeEndOfBuffer guibg=NONE'
+
+    vim.cmd.hi 'TelescopeNormal guibg=NONE'
+    vim.cmd.hi 'TelescopeBorder guibg=NONE'
+    vim.cmd.hi 'TelescopePromptNormal guibg=NONE'
+    vim.cmd.hi 'TelescopePromptBorder guibg=NONE'
+    vim.cmd.hi 'TelescopePromptTitle guibg=NONE'
+    vim.cmd.hi 'TelescopePreviewTitle guibg=NONE'
+    vim.cmd.hi 'TelescopeResultsTitle guibg=NONE'
+    vim.cmd.hi 'TelescopePreviewNormal guibg=NONE'
+    vim.cmd.hi 'TelescopePreviewBorder guibg=NONE'
+    vim.cmd.hi 'TelescopeResultsNormal guibg=NONE'
+    vim.cmd.hi 'TelescopeResultsBorder guibg=NONE'
+  end,
+}
 -- return {
 --   'bluz71/vim-nightfly-colors',
 --   name = 'nightfly',
@@ -125,21 +136,21 @@
 --     vim.cmd.colorscheme 'calvera'
 --   end,
 -- }
-return {
-  'catppuccin/nvim',
-  name = 'catppuccin',
-  priority = 1000,
-  init = function()
-    require('catppuccin').setup {
-      flavour = 'mocha',
-      transparent_background = true,
-      dim_inactive = {
-        enabled = false, -- dims the background color of inactive window
-        shade = 'dark',
-        percentage = 0.4, -- percentage of the shade to apply to the inactive window
-      },
-    }
-
-    vim.cmd.colorscheme 'catppuccin'
-  end,
-}
+-- return {
+--   'catppuccin/nvim',
+--   name = 'catppuccin',
+--   priority = 1000,
+--   init = function()
+--     require('catppuccin').setup {
+--       flavour = 'mocha',
+--       transparent_background = true,
+--       dim_inactive = {
+--         enabled = false, -- dims the background color of inactive window
+--         shade = 'dark',
+--         percentage = 0.4, -- percentage of the shade to apply to the inactive window
+--       },
+--     }
+--
+--     vim.cmd.colorscheme 'catppuccin'
+--   end,
+-- } -- }

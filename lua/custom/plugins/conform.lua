@@ -33,14 +33,14 @@ return { -- Autoformat
       typescript = { 'biome' },
       javascriptreact = { 'biome' },
       typescriptreact = { 'biome' },
-      -- Conform can also run multiple formatters sequentially
-      blade = { 'blade-formatter' },
-      python = { 'black' },
+      -- blade = { 'blade-formatter' },
+      -- python = { 'black' },
       cpp = { 'clang-format' },
       c = { 'clang-format' },
       cmake = { 'cmake_format' },
       asm = { 'asmfmt' },
-      go = { 'gofmt' },
+      -- go = { 'gofmt' },
+      -- ocaml = { 'ocamlformat' },
     },
     formatters = {
       ['clang-format'] = {
@@ -49,6 +49,14 @@ return { -- Autoformat
           '--fallback-style=LLVM',
         },
       },
+      -- ['ocamlformat'] = {
+      --   '--if-then-else',
+      --   'vertical',
+      --   '--break-cases',
+      --   'fit-or-vertical',
+      --   '--type-decl',
+      --   'sparse',
+      -- },
     },
   },
 }
