@@ -80,8 +80,6 @@ function M.setup()
 
   --Bufferline
   -- Keymaps for bufferline navigation
-  vim.keymap.set('n', '<Tab>', ':BufferNext<CR>', { silent = true, desc = 'Next Buffer' })
-  vim.keymap.set('n', '<S-Tab>', ':BufferPrevious<CR>', { silent = true, desc = 'Previous Buffer' })
   vim.keymap.set('n', '<leader>bp', ':BufferLinePick<CR>', { silent = true, desc = 'Pick Buffer' })
   vim.keymap.set('n', '<leader>bd', ':bdelete<CR>', { silent = true, desc = 'Close Buffer' })
 
