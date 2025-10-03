@@ -303,10 +303,22 @@ function M.setup()
     --     },
     --   },
     -- },
-    -- ocamllsp = {
-    --   filetypes = { 'ocaml', 'menhir', 'ocamlinterface', 'ocamllex', 'reason', 'dune' },
-    --   root_markers = { '*.opam', 'esy.json', 'package.json', '.git', 'dune-project', 'dune-workspace' },
-    -- },
+    ocamllsp = {
+      cmd = { 'ocamllsp' },
+      filetypes = { 'ocaml', 'menhir', 'ocamlinterface', 'ocamllex', 'reason', 'dune' },
+      root_markers = { '*.opam', 'esy.json', 'package.json', '.git', 'dune-project', 'dune-workspace' },
+      settings = {
+        extendedHover = { enable = true },
+        codelens = { enable = true },
+        inlayHints = {
+          hintPatternVariables = true,
+          hintLetBindings = true,
+          hintFunctionParams = true, -- This is the key one!
+        },
+        syntaxDocumentation = { enable = true },
+        merlinJumpCodeActions = { enable = true },
+      },
+    },
     rust_analyzer = {
       capabilities = capabilities,
       auto_attach = true,
