@@ -40,7 +40,7 @@ return { -- Autoformat
       cmake = { 'cmake_format' },
       asm = { 'asmfmt' },
       -- go = { 'gofmt' },
-      -- ocaml = { 'ocamlformat' },
+      ocaml = { 'ocamlformat' },
     },
     formatters = {
       ['clang-format'] = {
@@ -49,14 +49,14 @@ return { -- Autoformat
           '--fallback-style=LLVM',
         },
       },
-      -- ['ocamlformat'] = {
-      --   '--if-then-else',
-      --   'vertical',
-      --   '--break-cases',
-      --   'fit-or-vertical',
-      --   '--type-decl',
-      --   'sparse',
-      -- },
+      ['ocamlformat'] = {
+        '--if-then-else',
+        'vertical',
+        '--break-cases',
+        'fit-or-vertical',
+        '--type-decl',
+        'sparse',
+      },
     },
   },
 }
