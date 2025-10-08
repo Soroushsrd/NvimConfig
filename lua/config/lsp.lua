@@ -1,4 +1,4 @@
-local ocamllsp = require 'lspconfig.configs.ocamllsp'
+-- local ocamllsp = require 'lspconfig.configs.ocamllsp'
 local M = {}
 
 function M.setup()
@@ -311,12 +311,14 @@ function M.setup()
         extendedHover = { enable = true },
         codelens = { enable = true },
         inlayHints = {
+          enable = true,
           hintPatternVariables = true,
           hintLetBindings = true,
           hintFunctionParams = true, -- This is the key one!
         },
         syntaxDocumentation = { enable = true },
         merlinJumpCodeActions = { enable = true },
+        duneDiagnostics = { enable = true },
       },
     },
     rust_analyzer = {

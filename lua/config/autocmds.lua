@@ -88,6 +88,8 @@ function M.setup()
     end
   end, {})
 
+  vim.keymap.set('n', '<leader>ct', ':TsConfig<CR>', { noremap = true, silent = true, desc = 'Create tsconfig.json' })
+
   -- HTML specific indentation settings (works for Blade too since it's HTML-based)
   vim.api.nvim_create_autocmd('FileType', {
     pattern = { 'html', 'blade', 'js', 'jsx', 'tsx', 'ts' },
