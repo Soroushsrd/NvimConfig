@@ -167,7 +167,13 @@ require('lazy').setup({
   require 'kickstart.plugins.autopairs',
   require 'kickstart.plugins.neo-tree',
   require 'kickstart.plugins.gitsigns',
-
+  -- require('cpp')
+  --   .setup {
+  --     keymaps = {
+  --       new_project = '<leader>cpn',
+  --       add_class = '<leader>cpc',
+  --     },
+  --   },
   -- custom plugins
   { import = 'custom.plugins' },
 }, {
@@ -194,3 +200,9 @@ require('config.autocmds').setup()
 require('config.commands').setup()
 require('config.terminal').setup()
 require('config.lsp').setup()
+require('cpp').setup {
+  keymaps = {
+    new_project = '<leader>cpn',
+    add_class = '<leader>cpc',
+  },
+}

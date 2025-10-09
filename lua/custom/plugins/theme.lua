@@ -17,24 +17,24 @@
 --     vim.cmd 'colorscheme kanagawa-lotus'
 --   end,
 -- }
--- return {
---   'EdenEast/nightfox.nvim',
---   lazy = false,
---   priority = 1000,
---   config = function()
---     require('nightfox').setup {
---       options = {
---         transparent = true, -- Disable setting background
---         terminal_colors = true, -- Set terminal colors
---         dim_inactive = false, -- Non focused panes set to alternative background
---         module_default = true, -- Default enable value for modules
---       },
---     }
---
---     -- setup must be called before loading the colorscheme
---     vim.cmd 'colorscheme duskfox'
---   end,
--- }
+return {
+  'EdenEast/nightfox.nvim',
+  lazy = false,
+  priority = 1000,
+  config = function()
+    require('nightfox').setup {
+      options = {
+        transparent = true, -- Disable setting background
+        terminal_colors = true, -- Set terminal colors
+        dim_inactive = false, -- Non focused panes set to alternative background
+        module_default = true, -- Default enable value for modules
+      },
+    }
+
+    -- setup must be called before loading the colorscheme
+    vim.cmd 'colorscheme duskfox'
+  end,
+}
 -- return {
 --   'ricardoraposo/gruvbox-minor.nvim',
 --   lazy = false,
@@ -87,37 +87,37 @@
 --     vim.cmd.colorscheme 'gruvbox-material'
 --   end,
 -- }
-return { -- You can easily change to a different colorscheme.
-  'folke/tokyonight.nvim',
-  priority = 1000, -- Make sure to load this before all the other start plugins.
-  init = function()
-    require('tokyonight').setup {
-      dim_inactive = false,
-      transparent = true,
-    }
-    -- Load the colorscheme here.
-    -- Like many other themes, this one has different styles, and you could load
-    -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-    vim.cmd.colorscheme 'tokyonight-night'
-    -- You can configure highlights by doing something like:
-    vim.cmd.hi 'Comment gui=none'
-    vim.cmd.hi 'NeoTreeNormal guibg=NONE'
-    vim.cmd.hi 'NeoTreeNormalNC guibg=NONE'
-    vim.cmd.hi 'NeoTreeEndOfBuffer guibg=NONE'
-
-    vim.cmd.hi 'TelescopeNormal guibg=NONE'
-    vim.cmd.hi 'TelescopeBorder guibg=NONE'
-    vim.cmd.hi 'TelescopePromptNormal guibg=NONE'
-    vim.cmd.hi 'TelescopePromptBorder guibg=NONE'
-    vim.cmd.hi 'TelescopePromptTitle guibg=NONE'
-    vim.cmd.hi 'TelescopePreviewTitle guibg=NONE'
-    vim.cmd.hi 'TelescopeResultsTitle guibg=NONE'
-    vim.cmd.hi 'TelescopePreviewNormal guibg=NONE'
-    vim.cmd.hi 'TelescopePreviewBorder guibg=NONE'
-    vim.cmd.hi 'TelescopeResultsNormal guibg=NONE'
-    vim.cmd.hi 'TelescopeResultsBorder guibg=NONE'
-  end,
-}
+-- return { -- You can easily change to a different colorscheme.
+--   'folke/tokyonight.nvim',
+--   priority = 1000, -- Make sure to load this before all the other start plugins.
+--   init = function()
+--     require('tokyonight').setup {
+--       dim_inactive = false,
+--       transparent = true,
+--     }
+--     -- Load the colorscheme here.
+--     -- Like many other themes, this one has different styles, and you could load
+--     -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
+--     vim.cmd.colorscheme 'tokyonight-night'
+--     -- You can configure highlights by doing something like:
+--     vim.cmd.hi 'Comment gui=none'
+--     vim.cmd.hi 'NeoTreeNormal guibg=NONE'
+--     vim.cmd.hi 'NeoTreeNormalNC guibg=NONE'
+--     vim.cmd.hi 'NeoTreeEndOfBuffer guibg=NONE'
+--
+--     vim.cmd.hi 'TelescopeNormal guibg=NONE'
+--     vim.cmd.hi 'TelescopeBorder guibg=NONE'
+--     vim.cmd.hi 'TelescopePromptNormal guibg=NONE'
+--     vim.cmd.hi 'TelescopePromptBorder guibg=NONE'
+--     vim.cmd.hi 'TelescopePromptTitle guibg=NONE'
+--     vim.cmd.hi 'TelescopePreviewTitle guibg=NONE'
+--     vim.cmd.hi 'TelescopeResultsTitle guibg=NONE'
+--     vim.cmd.hi 'TelescopePreviewNormal guibg=NONE'
+--     vim.cmd.hi 'TelescopePreviewBorder guibg=NONE'
+--     vim.cmd.hi 'TelescopeResultsNormal guibg=NONE'
+--     vim.cmd.hi 'TelescopeResultsBorder guibg=NONE'
+--   end,
+-- }
 -- return {
 --   'bluz71/vim-nightfly-colors',
 --   name = 'nightfly',
