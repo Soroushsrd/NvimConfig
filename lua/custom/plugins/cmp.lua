@@ -28,7 +28,15 @@ return { -- Autocompletion
     local cmp = require 'cmp'
     local luasnip = require 'luasnip'
     luasnip.config.setup {}
-
+    vim.api.nvim_set_hl(0, 'Pmenu', { bg = 'NONE' })
+    vim.api.nvim_set_hl(0, 'PmenuSel', { bg = '#2e3440', fg = 'NONE' })
+    vim.api.nvim_set_hl(0, 'CmpItemAbbrMatch', { fg = '#569cd6', bg = 'NONE' })
+    vim.api.nvim_set_hl(0, 'CmpItemAbbrMatchFuzzy', { fg = '#569cd6', bg = 'NONE' })
+    vim.api.nvim_set_hl(0, 'CmpItemKindFunction', { fg = '#c586c0', bg = 'NONE' })
+    vim.api.nvim_set_hl(0, 'CmpItemKindMethod', { fg = '#c586c0', bg = 'NONE' })
+    -- Explicitly set NormalFloat transparent for documentation
+    vim.api.nvim_set_hl(0, 'NormalFloat', { bg = 'NONE' })
+    vim.api.nvim_set_hl(0, 'FloatBorder', { bg = 'NONE' })
     cmp.setup {
       snippet = {
         expand = function(args)
@@ -36,6 +44,15 @@ return { -- Autocompletion
         end,
       },
       completion = { completeopt = 'menu,menuone,noinsert' },
+      window = {
+        completion = {
+          border = 'rounded',
+          winhighlight = 'Normal:Pmenu,FloatBorder:Pmenu,Search:None',
+        },
+        documentation = {
+          border = 'rounded',
+        },
+      },
 
       mapping = cmp.mapping.preset.insert {
         ['<C-b>'] = cmp.mapping.scroll_docs(-4),

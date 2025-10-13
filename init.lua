@@ -6,10 +6,8 @@ vim.cmd [[
 ]]
 
 vim.g.neovide_opacity = 0.90
-
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
-
 vim.g.have_nerd_font = true
 
 -- vim.o.guifont = 'JetBrainsMono Nerd Font:h11'

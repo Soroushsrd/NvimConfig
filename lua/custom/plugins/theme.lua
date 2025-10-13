@@ -5,16 +5,9 @@
 --   end,
 -- }
 -- return {
---   'rose-pine/neovim',
---   name = 'rose-pine',
---   config = function()
---     vim.cmd 'colorscheme rose-pine'
---   end,
--- }
--- return {
 --   'rebelot/kanagawa.nvim',
 --   config = function()
---     vim.cmd 'colorscheme kanagawa-lotus'
+--     vim.cmd 'colorscheme kanagawa'
 --   end,
 -- }
 return {
@@ -44,25 +37,49 @@ return {
 --     vim.api.nvim_create_autocmd('ColorScheme', {
 --       pattern = 'gruvbox-minor',
 --       callback = function()
---         vim.api.nvim_set_hl(0, 'Normal', { bg = '#0a0a0a' })
---         vim.api.nvim_set_hl(0, 'NormalFloat', { bg = '#0a0a0a' })
---         vim.api.nvim_set_hl(0, 'SignColumn', { bg = '#0a0a0a' })
---         vim.api.nvim_set_hl(0, 'NormalNC', { bg = '#0a0a0a' })
---         vim.api.nvim_set_hl(0, 'MsgArea', { bg = '#0a0a0a' })
---         vim.api.nvim_set_hl(0, 'TelescopeBorder', { bg = '#0a0a0a' })
---         vim.api.nvim_set_hl(0, 'NvimTreeNormal', { bg = '#0a0a0a' })
---         vim.api.nvim_set_hl(0, 'EndOfBuffer', { bg = '#0a0a0a' })
---         vim.api.nvim_set_hl(0, 'StatusLine', { bg = '#0a0a0a' })
---         vim.api.nvim_set_hl(0, 'StatusLineNC', { bg = '#0a0a0a' })
---         vim.api.nvim_set_hl(0, 'VertSplit', { bg = '#0a0a0a' })
---         vim.api.nvim_set_hl(0, 'TabLine', { bg = '#0a0a0a', fg = '#928374' })
---         vim.api.nvim_set_hl(0, 'TabLineFill', { bg = '#0a0a0a' })
---         vim.api.nvim_set_hl(0, 'TabLineSel', { bg = '#504945', fg = '#ebdbb2', bold = true })
+--         -- vim.api.nvim_set_hl(0, 'Normal', { bg = '#0a0a0a' })
+--         -- vim.api.nvim_set_hl(0, 'NormalFloat', { bg = '#0a0a0a' })
+--         -- vim.api.nvim_set_hl(0, 'SignColumn', { bg = '#0a0a0a' })
+--         -- vim.api.nvim_set_hl(0, 'NormalNC', { bg = '#0a0a0a' })
+--         -- vim.api.nvim_set_hl(0, 'MsgArea', { bg = '#0a0a0a' })
+--         -- vim.api.nvim_set_hl(0, 'TelescopeBorder', { bg = '#0a0a0a' })
+--         -- vim.api.nvim_set_hl(0, 'NvimTreeNormal', { bg = '#0a0a0a' })
+--         -- vim.api.nvim_set_hl(0, 'EndOfBuffer', { bg = '#0a0a0a' })
+--         -- vim.api.nvim_set_hl(0, 'StatusLine', { bg = '#0a0a0a' })
+--         -- vim.api.nvim_set_hl(0, 'StatusLineNC', { bg = '#0a0a0a' })
+--         -- vim.api.nvim_set_hl(0, 'VertSplit', { bg = '#0a0a0a' })
+--         -- vim.api.nvim_set_hl(0, 'TabLine', { bg = '#0a0a0a', fg = '#928374' })
+--         -- vim.api.nvim_set_hl(0, 'TabLineFill', { bg = '#0a0a0a' })
+--         -- vim.api.nvim_set_hl(0, 'TabLineSel', { bg = '#504945', fg = '#ebdbb2', bold = true })
 --       end,
 --     })
 --
 --     -- Then load the colorscheme
 --     vim.cmd.colorscheme 'gruvbox-minor'
+--   end,
+-- }
+--
+-- return {
+--   'sainnhe/everforest',
+--   lazy = false,
+--   priority = 1000,
+--   config = function()
+--     -- Optionally configure and load the colorscheme
+--     -- directly inside the plugin declaration.
+--     vim.o.termguicolors = true
+--     --
+--     -- Important! Enable termguicolors for proper color rendering
+--
+--     vim.g.everforest_enable_italic = true
+--     vim.g.everforest_dim_inactive_windows = 0
+--     vim.g.everforest_background = 'hard'
+--     vim.o.background = 'dark'
+--     -- doesnt work in light mode
+--     vim.g.everforest_transparent_background = 1
+--     vim.g.everforest_cursor = 'green'
+--     vim.g.everforest_better_performance = 1
+--     vim.g.everforest_inlay_hints_background = 'dimmed'
+--     vim.cmd.colorscheme 'everforest'
 --   end,
 -- }
 -- return {
@@ -78,10 +95,10 @@ return {
 --
 --     vim.g.gruvbox_material_enable_italic = true
 --     vim.g.gruvbox_material_dim_inactive_windows = 0
---     vim.g.gruvbox_material_background = 'hard'
---     vim.o.background = 'dark'
+--     vim.g.gruvbox_material_background = 'medium'
+--     vim.o.background = 'light'
 --     -- doesnt work in light mode
---     vim.g.gruvbox_material_transparent_background = 1
+--     vim.g.gruvbox_material_transparent_background = 0
 --     vim.g.gruvbox_material_cursor = 'auto'
 --     vim.g.gruvbox_material_inlay_hints_background = 'dimmed'
 --     vim.cmd.colorscheme 'gruvbox-material'
