@@ -10,9 +10,9 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 vim.g.have_nerd_font = true
 
--- vim.o.guifont = 'JetBrainsMono Nerd Font:h11'
+vim.o.guifont = 'JetBrainsMono NFM SemiBold:h11'
 -- vim.o.guifont = 'CaskaydiaCove Nerd Font Propo:h11'
-vim.o.guifont = 'FiraCode Nerd Font:h12'
+-- vim.o.guifont = 'FiraCode Nerd Font:h12'
 
 -- Set NotifyBackground highlight group
 if vim.g.neovide then
