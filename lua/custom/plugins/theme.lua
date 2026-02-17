@@ -1,15 +1,28 @@
 -- return {
---   'yorumicolors/yorumi.nvim',
---   config = function()
---     vim.cmd.colorscheme 'yorumi'
---   end,
--- }
--- return {
 --   'rebelot/kanagawa.nvim',
 --   config = function()
+--     require('kanagawa').setup {
+--       transparent = true,
+--     }
 --     vim.cmd 'colorscheme kanagawa'
 --   end,
 -- }
+-- return {
+--   'projekt0n/github-nvim-theme',
+--   name = 'github-theme',
+--   lazy = false, -- make sure we load this during startup if it is your main colorscheme
+--   priority = 1000, -- make sure to load this before all the other start plugins
+--   config = function()
+--     require('github-theme').setup {
+--       options = {
+--         transparent = true,
+--       },
+--     }
+--
+--     vim.cmd 'colorscheme github_dark_high_contrast'
+--   end,
+-- }
+
 return {
   'EdenEast/nightfox.nvim',
   lazy = false,
@@ -28,6 +41,7 @@ return {
     vim.cmd 'colorscheme duskfox'
   end,
 }
+
 -- return {
 --   'ricardoraposo/gruvbox-minor.nvim',
 --   lazy = false,
@@ -58,7 +72,7 @@ return {
 --     vim.cmd.colorscheme 'gruvbox-minor'
 --   end,
 -- }
---
+
 -- return {
 --   'sainnhe/everforest',
 --   lazy = false,
@@ -72,10 +86,10 @@ return {
 --
 --     vim.g.everforest_enable_italic = true
 --     vim.g.everforest_dim_inactive_windows = 0
---     vim.g.everforest_background = 'hard'
---     vim.o.background = 'dark'
+--     vim.g.everforest_background = 'medium'
+--     vim.o.background = 'light'
 --     -- doesnt work in light mode
---     vim.g.everforest_transparent_background = 1
+--     vim.g.everforest_transparent_background = 0
 --     vim.g.everforest_cursor = 'green'
 --     vim.g.everforest_better_performance = 1
 --     vim.g.everforest_inlay_hints_background = 'dimmed'
@@ -89,16 +103,16 @@ return {
 --   config = function()
 --     -- Optionally configure and load the colorscheme
 --     -- directly inside the plugin declaration.
---     -- vim.o.termguicolors = true
+--     vim.o.termguicolors = true
 --     --
 --     -- Important! Enable termguicolors for proper color rendering
 --
 --     vim.g.gruvbox_material_enable_italic = true
 --     vim.g.gruvbox_material_dim_inactive_windows = 0
---     vim.g.gruvbox_material_background = 'medium'
---     vim.o.background = 'light'
+--     vim.g.gruvbox_material_background = 'hard'
+--     vim.o.background = 'dark'
 --     -- doesnt work in light mode
---     vim.g.gruvbox_material_transparent_background = 0
+--     vim.g.gruvbox_material_transparent_background = 1
 --     vim.g.gruvbox_material_cursor = 'auto'
 --     vim.g.gruvbox_material_inlay_hints_background = 'dimmed'
 --     vim.cmd.colorscheme 'gruvbox-material'

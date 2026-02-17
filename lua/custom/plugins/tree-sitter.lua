@@ -29,6 +29,7 @@ return { -- Highlight, edit, and navigate code
       'typescript',
       'javascript',
       'tsx',
+      'zig',
     },
     -- Autoinstall languages that are not installed
     auto_install = true,
