@@ -16,7 +16,7 @@ end
 
 local function create_input_window(title, callback)
   local buf = vim.api.nvim_create_buf(false, true)
-  local width = 60
+  local width = 40
   local height = 1
   local row = math.floor((vim.o.lines - height) / 2)
   local col = math.floor((vim.o.columns - width) / 2)
