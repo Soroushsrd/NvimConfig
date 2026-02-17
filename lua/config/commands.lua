@@ -96,7 +96,6 @@ PackConstructorInitializers: Never
 AlignConsecutiveDeclarations: Consecutive
 AlignConsecutiveAssignments: Consecutive
 AlignConsecutiveMacros: Consecutive
-ColumnLimit: 80
 ]]
 
     local file = io.open('.clang-format', 'w')
