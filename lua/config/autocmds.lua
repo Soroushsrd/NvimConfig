@@ -149,7 +149,6 @@ function M.setup()
 
   vim.api.nvim_create_user_command('ClangFormat', function()
     local clang_format_config = [[
----
 Language: Cpp
 BasedOnStyle: LLVM
 IndentWidth: 2
@@ -179,7 +178,6 @@ PackConstructorInitializers: Never
 AlignConsecutiveDeclarations: Consecutive
 AlignConsecutiveAssignments: Consecutive
 AlignConsecutiveMacros: Consecutive
-ColumnLimit: 80
 ]]
 
     local file = io.open('.clang-format', 'w')
