@@ -63,6 +63,7 @@ return {
           background_colour = '#000000', -- Set explicit background
           -- or try:
           -- background_colour = "Normal", -- Use Normal highlight group
+          merge_duplicates = true,
         }
       end,
     },

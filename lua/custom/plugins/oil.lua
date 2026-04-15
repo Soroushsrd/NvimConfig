@@ -7,7 +7,8 @@ return {
   -- Lazy loading is not recommended because it is very tricky to make it work correctly in all situations.
   lazy = false,
   config = function()
-    require('oil').setup {
+    local oil = require 'oil'
+    oil.setup {
       -- Optional: customize settings
       default_file_explorer = true, -- replaces netrw
       columns = {
