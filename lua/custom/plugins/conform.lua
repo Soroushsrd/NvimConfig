@@ -44,6 +44,7 @@ return { -- Autoformat
     },
     formatters = {
       ['clang-format'] = {
+        command = 'clang-format',
         prepend_args = {
           '--style=file', -- Use .clang-format file if available
           '--fallback-style=LLVM',
