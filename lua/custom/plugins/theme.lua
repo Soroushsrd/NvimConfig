@@ -1,187 +1,220 @@
--- return {
---   'rebelot/kanagawa.nvim',
---   config = function()
---     require('kanagawa').setup {
---       transparent = true,
---     }
---     vim.cmd 'colorscheme kanagawa'
---   end,
--- }
--- return {
---   'projekt0n/github-nvim-theme',
---   name = 'github-theme',
---   lazy = false, -- make sure we load this during startup if it is your main colorscheme
---   priority = 1000, -- make sure to load this before all the other start plugins
---   config = function()
---     require('github-theme').setup {
---       options = {
---         transparent = true,
---       },
---     }
---
---     vim.cmd 'colorscheme github_dark_high_contrast'
---   end,
--- }
-
 return {
-  'EdenEast/nightfox.nvim',
-  lazy = false,
-  priority = 1000,
-  config = function()
-    require('nightfox').setup {
-      options = {
-        transparent = true, -- Disable setting background
-        terminal_colors = true, -- Set terminal colors
-        dim_inactive = false, -- Non focused panes set to alternative background
-        module_default = true, -- Default enable value for modules
-      },
-    }
+  -- All colorscheme plugins as dependencies
+  { 'loctvl842/monokai-pro.nvim' },
+  { 'EdenEast/nightfox.nvim' },
+  { 'ricardoraposo/gruvbox-minor.nvim' },
+  { 'sainnhe/everforest' },
+  { 'sainnhe/gruvbox-material' },
+  { 'folke/tokyonight.nvim' },
+  { 'bluz71/vim-nightfly-colors', name = 'nightfly' },
+  { 'yashguptaz/calvera-dark.nvim' },
+  { 'catppuccin/nvim', name = 'catppuccin' },
+  { 'scottmckendry/cyberdream.nvim', name = 'cyberdream' },
+  { 'IroncladDev/osmium', name = 'osmium' },
 
-    -- setup must be called before loading the colorscheme
-    vim.cmd 'colorscheme duskfox'
-  end,
+  -- Themery itself
+  {
+    'zaldih/themery.nvim',
+    lazy = false,
+    priority = 1000,
+    config = function()
+      require('themery').setup {
+        themes = {
+          {
+            name = 'SpaceDark',
+            colorscheme = 'spacedark',
+          },
+          {
+            name = 'Ayu',
+            colorscheme = 'ayu',
+          },
+          {
+            name = 'Glacier',
+            colorscheme = 'glacier',
+          },
+          {
+            name = 'Seadark',
+            colorscheme = 'seadark',
+          },
+          {
+            name = 'Lucid',
+            colorscheme = 'lucid',
+          },
+          {
+            name = 'TicToc',
+            colorscheme = 'tictoc',
+          },
+          {
+            name = 'SpaceDuck',
+            colorscheme = 'spaceduck',
+          },
+          {
+            name = 'Gruvbox',
+            colorscheme = 'gruvbox',
+          },
+          {
+            name = 'Iceberg',
+            colorscheme = 'iceberg',
+          },
+          {
+            name = 'Memoonry',
+            colorscheme = 'memoonry',
+          },
+          -- Osmium
+          {
+            name = 'Osmium',
+            colorscheme = 'osmium',
+            before = [[
+              require('osmium').setup({
+                transparent_bg = true,
+              })
+            ]],
+          },
+          -- Monokai Pro (Classic, Transparent)
+          {
+            name = 'Monokai Pro Classic',
+            colorscheme = 'monokai-pro',
+            before = [[
+              require('monokai-pro').setup {
+                transparent_background = true,
+                
+                filter = 'classic',
+                dim_inactive= false,
+                background_clear = {
+                  "neo-tree",
+                  "bufferline",
+                }
+              }
+            ]],
+          },
+          -- Cyberdream
+          {
+            name = 'Cyberdream',
+            colorscheme = 'cyberdream',
+            before = [[
+              require('cyberdream').setup({
+                transparent = true,
+                italic_comments = true,
+                cache = true,
+              })
+            ]],
+          },
+
+          -- Nightfox: Duskfox (Transparent)
+          {
+            name = 'Duskfox',
+            colorscheme = 'duskfox',
+            before = [[
+              require('nightfox').setup {
+                options = {
+                  transparent = true,
+                  terminal_colors = true,
+                  dim_inactive = false,
+                  module_default = true,
+                },
+              }
+            ]],
+          },
+
+          -- Gruvbox Minor
+          {
+            name = 'Gruvbox Minor',
+            colorscheme = 'gruvbox-minor',
+          },
+
+          -- Everforest (Dark Hard)
+          {
+            name = 'Everforest',
+            colorscheme = 'everforest',
+            before = [[
+              vim.o.termguicolors = true
+              vim.g.everforest_enable_italic = true
+              vim.g.everforest_dim_inactive_windows = 0
+              vim.g.everforest_background = 'hard'
+              vim.o.background = 'dark'
+              vim.g.everforest_transparent_background = 0
+              vim.g.everforest_cursor = 'green'
+              vim.g.everforest_better_performance = 1
+              vim.g.everforest_inlay_hints_background = 'dimmed'
+            ]],
+          },
+
+          -- Gruvbox Material (Dark Hard, Transparent)
+          {
+            name = 'Gruvbox Material',
+            colorscheme = 'gruvbox-material',
+            before = [[
+              vim.o.termguicolors = true
+              vim.g.gruvbox_material_enable_italic = true
+              vim.g.gruvbox_material_dim_inactive_windows = 0
+              vim.g.gruvbox_material_background = 'hard'
+              vim.o.background = 'dark'
+              vim.g.gruvbox_material_transparent_background = 1
+              vim.g.gruvbox_material_cursor = 'auto'
+              vim.g.gruvbox_material_inlay_hints_background = 'dimmed'
+            ]],
+          },
+
+          -- TokyoNight (Transparent)
+          {
+            name = 'TokyoNight Night',
+            colorscheme = 'tokyonight-night',
+            before = [[
+              require('tokyonight').setup {
+                dim_inactive = false,
+                transparent = true,
+              }
+            ]],
+            after = [[
+              vim.cmd.hi 'Comment gui=none'
+              vim.cmd.hi 'NeoTreeNormal guibg=NONE'
+              vim.cmd.hi 'NeoTreeNormalNC guibg=NONE'
+              vim.cmd.hi 'NeoTreeEndOfBuffer guibg=NONE'
+              vim.cmd.hi 'TelescopeNormal guibg=NONE'
+              vim.cmd.hi 'TelescopeBorder guibg=NONE'
+              vim.cmd.hi 'TelescopePromptNormal guibg=NONE'
+              vim.cmd.hi 'TelescopePromptBorder guibg=NONE'
+              vim.cmd.hi 'TelescopePromptTitle guibg=NONE'
+              vim.cmd.hi 'TelescopePreviewTitle guibg=NONE'
+              vim.cmd.hi 'TelescopeResultsTitle guibg=NONE'
+              vim.cmd.hi 'TelescopePreviewNormal guibg=NONE'
+              vim.cmd.hi 'TelescopePreviewBorder guibg=NONE'
+              vim.cmd.hi 'TelescopeResultsNormal guibg=NONE'
+              vim.cmd.hi 'TelescopeResultsBorder guibg=NONE'
+            ]],
+          },
+
+          -- Nightfly
+          {
+            name = 'Nightfly',
+            colorscheme = 'nightfly',
+          },
+
+          -- Calvera Dark
+          {
+            name = 'Calvera Dark',
+            colorscheme = 'calvera',
+          },
+
+          -- Catppuccin Mocha (Transparent)
+          {
+            name = 'Catppuccin Mocha',
+            colorscheme = 'catppuccin',
+            before = [[
+              require('catppuccin').setup {
+                flavour = 'mocha',
+                transparent_background = true,
+                dim_inactive = {
+                  enabled = false,
+                  shade = 'dark',
+                  percentage = 0.4,
+                },
+              }
+            ]],
+          },
+        },
+        livePreview = true,
+      }
+    end,
+  },
 }
-
--- return {
---   'ricardoraposo/gruvbox-minor.nvim',
---   lazy = false,
---   priority = 1000,
---   config = function()
---     -- First set up an autocmd that will run after the colorscheme is loaded
---     vim.api.nvim_create_autocmd('ColorScheme', {
---       pattern = 'gruvbox-minor',
---       callback = function()
---         -- vim.api.nvim_set_hl(0, 'Normal', { bg = '#0a0a0a' })
---         -- vim.api.nvim_set_hl(0, 'NormalFloat', { bg = '#0a0a0a' })
---         -- vim.api.nvim_set_hl(0, 'SignColumn', { bg = '#0a0a0a' })
---         -- vim.api.nvim_set_hl(0, 'NormalNC', { bg = '#0a0a0a' })
---         -- vim.api.nvim_set_hl(0, 'MsgArea', { bg = '#0a0a0a' })
---         -- vim.api.nvim_set_hl(0, 'TelescopeBorder', { bg = '#0a0a0a' })
---         -- vim.api.nvim_set_hl(0, 'NvimTreeNormal', { bg = '#0a0a0a' })
---         -- vim.api.nvim_set_hl(0, 'EndOfBuffer', { bg = '#0a0a0a' })
---         -- vim.api.nvim_set_hl(0, 'StatusLine', { bg = '#0a0a0a' })
---         -- vim.api.nvim_set_hl(0, 'StatusLineNC', { bg = '#0a0a0a' })
---         -- vim.api.nvim_set_hl(0, 'VertSplit', { bg = '#0a0a0a' })
---         -- vim.api.nvim_set_hl(0, 'TabLine', { bg = '#0a0a0a', fg = '#928374' })
---         -- vim.api.nvim_set_hl(0, 'TabLineFill', { bg = '#0a0a0a' })
---         -- vim.api.nvim_set_hl(0, 'TabLineSel', { bg = '#504945', fg = '#ebdbb2', bold = true })
---       end,
---     })
---
---     -- Then load the colorscheme
---     vim.cmd.colorscheme 'gruvbox-minor'
---   end,
--- }
-
--- return {
---   'sainnhe/everforest',
---   lazy = false,
---   priority = 1000,
---   config = function()
---     -- Optionally configure and load the colorscheme
---     -- directly inside the plugin declaration.
---     vim.o.termguicolors = true
---     --
---     -- Important! Enable termguicolors for proper color rendering
---
---     vim.g.everforest_enable_italic = true
---     vim.g.everforest_dim_inactive_windows = 0
---     vim.g.everforest_background = 'medium'
---     vim.o.background = 'light'
---     -- doesnt work in light mode
---     vim.g.everforest_transparent_background = 0
---     vim.g.everforest_cursor = 'green'
---     vim.g.everforest_better_performance = 1
---     vim.g.everforest_inlay_hints_background = 'dimmed'
---     vim.cmd.colorscheme 'everforest'
---   end,
--- }
--- return {
---   'sainnhe/gruvbox-material',
---   lazy = false,
---   priority = 1000,
---   config = function()
---     -- Optionally configure and load the colorscheme
---     -- directly inside the plugin declaration.
---     vim.o.termguicolors = true
---     --
---     -- Important! Enable termguicolors for proper color rendering
---
---     vim.g.gruvbox_material_enable_italic = true
---     vim.g.gruvbox_material_dim_inactive_windows = 0
---     vim.g.gruvbox_material_background = 'hard'
---     vim.o.background = 'dark'
---     -- doesnt work in light mode
---     vim.g.gruvbox_material_transparent_background = 1
---     vim.g.gruvbox_material_cursor = 'auto'
---     vim.g.gruvbox_material_inlay_hints_background = 'dimmed'
---     vim.cmd.colorscheme 'gruvbox-material'
---   end,
--- }
--- return { -- You can easily change to a different colorscheme.
---   'folke/tokyonight.nvim',
---   priority = 1000, -- Make sure to load this before all the other start plugins.
---   init = function()
---     require('tokyonight').setup {
---       dim_inactive = false,
---       transparent = true,
---     }
---     -- Load the colorscheme here.
---     -- Like many other themes, this one has different styles, and you could load
---     -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
---     vim.cmd.colorscheme 'tokyonight-night'
---     -- You can configure highlights by doing something like:
---     vim.cmd.hi 'Comment gui=none'
---     vim.cmd.hi 'NeoTreeNormal guibg=NONE'
---     vim.cmd.hi 'NeoTreeNormalNC guibg=NONE'
---     vim.cmd.hi 'NeoTreeEndOfBuffer guibg=NONE'
---
---     vim.cmd.hi 'TelescopeNormal guibg=NONE'
---     vim.cmd.hi 'TelescopeBorder guibg=NONE'
---     vim.cmd.hi 'TelescopePromptNormal guibg=NONE'
---     vim.cmd.hi 'TelescopePromptBorder guibg=NONE'
---     vim.cmd.hi 'TelescopePromptTitle guibg=NONE'
---     vim.cmd.hi 'TelescopePreviewTitle guibg=NONE'
---     vim.cmd.hi 'TelescopeResultsTitle guibg=NONE'
---     vim.cmd.hi 'TelescopePreviewNormal guibg=NONE'
---     vim.cmd.hi 'TelescopePreviewBorder guibg=NONE'
---     vim.cmd.hi 'TelescopeResultsNormal guibg=NONE'
---     vim.cmd.hi 'TelescopeResultsBorder guibg=NONE'
---   end,
--- }
--- return {
---   'bluz71/vim-nightfly-colors',
---   name = 'nightfly',
---   lazy = false,
---   priority = 1000,
---
---   init = function()
---     vim.cmd [[colorscheme nightfly]]
---   end,
--- }
--- return {
---   'yashguptaz/calvera-dark.nvim',
---   lazy = false,
---   priority = 1000,
---   config = function()
---     vim.cmd.colorscheme 'calvera'
---   end,
--- }
--- return {
---   'catppuccin/nvim',
---   name = 'catppuccin',
---   priority = 1000,
---   init = function()
---     require('catppuccin').setup {
---       flavour = 'mocha',
---       transparent_background = true,
---       dim_inactive = {
---         enabled = false, -- dims the background color of inactive window
---         shade = 'dark',
---         percentage = 0.4, -- percentage of the shade to apply to the inactive window
---       },
---     }
---
---     vim.cmd.colorscheme 'catppuccin'
---   end,
--- } -- }
