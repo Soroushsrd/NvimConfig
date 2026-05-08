@@ -61,8 +61,9 @@ return {
       config = function()
         require('notify').setup {
           background_colour = '#000000', -- Set explicit background
+          -- background_colour = '#1a1a1a', -- match your terminal bg
           -- or try:
-          -- background_colour = "Normal", -- Use Normal highlight group
+          -- background_colour = 'Normal', -- Use Normal highlight group
           merge_duplicates = true,
         }
       end,
@@ -71,6 +72,8 @@ return {
 
   config = function(_, opts)
     require('noice').setup(opts)
+    -- vim.api.nvim_set_hl(0, 'NoiceCmdlinePopupBorder', { bg = 'NONE' })
+    -- vim.api.nvim_set_hl(0, 'NoicePopupBorder', { bg = 'NONE' })
     vim.api.nvim_set_hl(0, 'NormalFloat', { bg = 'NONE' })
     vim.api.nvim_set_hl(0, 'FloatBorder', { bg = 'NONE' })
   end,
