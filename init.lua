@@ -1,24 +1,24 @@
 vim.opt.termguicolors = true
 vim.cmd 'colorscheme spaceduck'
-vim.cmd [[
-  highlight Normal guibg=NONE ctermbg=NONE
-  highlight NonText guibg=NONE ctermbg=NONE
-]]
+-- vim.cmd [[
+--   highlight Normal guibg=NONE ctermbg=NONE
+--   highlight NonText guibg=NONE ctermbg=NONE
+-- ]]
 
 vim.g.neovide_opacity = 0.90
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 vim.g.have_nerd_font = true
 
-vim.o.guifont = 'JetBrainsMono NFM SemiBold:h11'
--- vim.o.guifont = 'CaskaydiaCove Nerd Font Propo:h11'
+-- vim.o.guifont = 'JetBrainsMono NFM SemiBold:h12'
+vim.o.guifont = 'CaskaydiaCove Nerd Font Propo:h12'
 -- vim.o.guifont = 'FiraCode Nerd Font:h12'
 
 -- Set NotifyBackground highlight group
 if vim.g.neovide then
-  vim.g.neovide_fullscreen = true
+  vim.g.neovide_fullscreen = false
   vim.g.neovide_padding_top = 0
-  vim.g.neovide_padding_bottom = 0 -- Add bottom padding
+  vim.g.neovide_padding_bottom = 0
   vim.g.neovide_padding_right = 0
   vim.g.neovide_padding_left = 0
   vim.g.neovide_hide_mouse_when_typing = true
