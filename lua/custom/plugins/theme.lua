@@ -5,12 +5,14 @@ return {
   { 'ricardoraposo/gruvbox-minor.nvim' },
   { 'sainnhe/everforest' },
   { 'sainnhe/gruvbox-material' },
+  { 'morhetz/gruvbox', name = 'gruvbox' },
   { 'folke/tokyonight.nvim' },
   { 'bluz71/vim-nightfly-colors', name = 'nightfly' },
   { 'yashguptaz/calvera-dark.nvim' },
   { 'catppuccin/nvim', name = 'catppuccin' },
   { 'scottmckendry/cyberdream.nvim', name = 'cyberdream' },
   { 'IroncladDev/osmium', name = 'osmium' },
+  { 'rose-pine/neovim', name = 'rose-pine' },
 
   -- Themery itself
   {
@@ -70,6 +72,70 @@ return {
               })
             ]],
           },
+
+          -- Everforest
+          {
+            name = 'Everforest',
+            colorscheme = 'everforest',
+            before = [[
+              vim.o.termguicolors = true
+              vim.g.everforest_enable_italic = true
+              vim.g.everforest_dim_inactive_windows = 0
+              vim.g.everforest_background = 'soft'
+              vim.g.everforest_transparent_background = 0
+              vim.g.everforest_cursor = 'green'
+              vim.g.everforest_better_performance = 1
+              vim.g.everforest_inlay_hints_background = 'dimmed'
+            ]],
+            after = [[
+              vim.o.background = 'light'
+            ]],
+          },
+
+          --- Gruvbox
+          {
+            name = 'Gruvbox',
+            colorscheme = 'gruvbox',
+            before = [[
+              vim.g.gruvbox_transparent_background = 1
+              vim.g.gruvbox_background = 'soft'
+            ]],
+            after = [[
+              vim.o.background = 'light'
+            ]],
+          },
+          -- Gruvbox Material
+          {
+            name = 'Gruvbox Material',
+            colorscheme = 'gruvbox-material',
+            before = [[
+              vim.o.termguicolors = true
+              vim.g.gruvbox_material_enable_italic = true
+              vim.g.gruvbox_material_dim_inactive_windows = 0
+              vim.g.gruvbox_material_background = 'soft'
+              -- vim.g.gruvbox_material_transparent_background = 2
+              vim.g.gruvbox_material_cursor = 'auto'
+              vim.g.gruvbox_material_inlay_hints_background = 'dimmed'
+            ]],
+            after = [[
+              vim.o.background = 'light'
+            ]],
+          },
+
+          -- Rosepine
+          {
+            name = 'Rose-pine',
+            colorscheme = 'rose-pine',
+            before = [[
+            require('rose-pine').setup({
+              variant = "main",
+              styles = {
+                bold = true,
+                italic = true,
+              }
+            })
+          ]],
+          },
           -- Monokai Pro (Classic, Transparent)
           {
             name = 'Monokai Pro Classic',
@@ -77,12 +143,12 @@ return {
             before = [[
               require('monokai-pro').setup {
                 transparent_background = true,
-                
                 filter = 'classic',
                 dim_inactive= false,
                 background_clear = {
                   "neo-tree",
                   "bufferline",
+                  'telescope'
                 }
               }
             ]],
@@ -121,40 +187,6 @@ return {
             name = 'Gruvbox Minor',
             colorscheme = 'gruvbox-minor',
           },
-
-          -- Everforest (Dark Hard)
-          {
-            name = 'Everforest',
-            colorscheme = 'everforest',
-            before = [[
-              vim.o.termguicolors = true
-              vim.g.everforest_enable_italic = true
-              vim.g.everforest_dim_inactive_windows = 0
-              vim.g.everforest_background = 'hard'
-              vim.o.background = 'dark'
-              vim.g.everforest_transparent_background = 0
-              vim.g.everforest_cursor = 'green'
-              vim.g.everforest_better_performance = 1
-              vim.g.everforest_inlay_hints_background = 'dimmed'
-            ]],
-          },
-
-          -- Gruvbox Material (Dark Hard, Transparent)
-          {
-            name = 'Gruvbox Material',
-            colorscheme = 'gruvbox-material',
-            before = [[
-              vim.o.termguicolors = true
-              vim.g.gruvbox_material_enable_italic = true
-              vim.g.gruvbox_material_dim_inactive_windows = 0
-              vim.g.gruvbox_material_background = 'hard'
-              vim.o.background = 'dark'
-              vim.g.gruvbox_material_transparent_background = 1
-              vim.g.gruvbox_material_cursor = 'auto'
-              vim.g.gruvbox_material_inlay_hints_background = 'dimmed'
-            ]],
-          },
-
           -- TokyoNight (Transparent)
           {
             name = 'TokyoNight Night',
