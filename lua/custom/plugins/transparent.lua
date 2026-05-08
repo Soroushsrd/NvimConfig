@@ -1,4 +1,4 @@
 return {
-  'tribela/transparent.nvim',
-  config = true,
+  -- 'tribela/transparent.nvim',
+  -- config = false,
 }
