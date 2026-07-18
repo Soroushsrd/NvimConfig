@@ -7,12 +7,11 @@ return {
   { 'sainnhe/gruvbox-material' },
   { 'morhetz/gruvbox', name = 'gruvbox' },
   { 'folke/tokyonight.nvim' },
-  { 'bluz71/vim-nightfly-colors', name = 'nightfly' },
-  { 'yashguptaz/calvera-dark.nvim' },
   { 'catppuccin/nvim', name = 'catppuccin' },
   { 'scottmckendry/cyberdream.nvim', name = 'cyberdream' },
-  { 'IroncladDev/osmium', name = 'osmium' },
   { 'rose-pine/neovim', name = 'rose-pine' },
+  { 'rebelot/kanagawa.nvim', name = 'kanagawa' },
+  { 'luisiacc/gruvbox-baby', name = 'gruvbox-baby' },
 
   -- Themery itself
   {
@@ -62,16 +61,6 @@ return {
             name = 'Memoonry',
             colorscheme = 'memoonry',
           },
-          -- Osmium
-          {
-            name = 'Osmium',
-            colorscheme = 'osmium',
-            before = [[
-              require('osmium').setup({
-                transparent_bg = true,
-              })
-            ]],
-          },
 
           -- Everforest
           {
@@ -112,13 +101,13 @@ return {
               vim.o.termguicolors = true
               vim.g.gruvbox_material_enable_italic = true
               vim.g.gruvbox_material_dim_inactive_windows = 0
-              vim.g.gruvbox_material_background = 'soft'
+              vim.g.gruvbox_material_background = 'hard'
               -- vim.g.gruvbox_material_transparent_background = 2
               vim.g.gruvbox_material_cursor = 'auto'
               vim.g.gruvbox_material_inlay_hints_background = 'dimmed'
             ]],
             after = [[
-              vim.o.background = 'light'
+              vim.o.background = 'dark'
             ]],
           },
 
@@ -187,6 +176,27 @@ return {
             name = 'Gruvbox Minor',
             colorscheme = 'gruvbox-minor',
           },
+          {
+            name = 'gruvbox-baby',
+            colorscheme = 'gruvbox-baby',
+            before = [[ 
+            vim.g.gruvbox_baby_background_color = "dark" 
+            vim.g.gruvbox_baby_transparent_mode = 1
+            ]],
+          },
+          {
+            name = 'Kanagawa',
+            colorscheme = 'kanagawa',
+            before = [[
+              require('kanagawa').setup {
+                theme = "wave",
+                transparent = true,
+                background = {
+                  dark = "wave",
+                }
+              }
+            ]],
+          },
           -- TokyoNight (Transparent)
           {
             name = 'TokyoNight Night',
@@ -216,18 +226,6 @@ return {
             ]],
           },
 
-          -- Nightfly
-          {
-            name = 'Nightfly',
-            colorscheme = 'nightfly',
-          },
-
-          -- Calvera Dark
-          {
-            name = 'Calvera Dark',
-            colorscheme = 'calvera',
-          },
-
           -- Catppuccin Mocha (Transparent)
           {
             name = 'Catppuccin Mocha',
@@ -235,7 +233,7 @@ return {
             before = [[
               require('catppuccin').setup {
                 flavour = 'mocha',
-                transparent_background = true,
+                transparent_background = false,
                 dim_inactive = {
                   enabled = false,
                   shade = 'dark',
