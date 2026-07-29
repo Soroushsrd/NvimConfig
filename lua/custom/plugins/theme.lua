@@ -188,14 +188,23 @@ return {
             name = 'Kanagawa',
             colorscheme = 'kanagawa',
             before = [[
-              require('kanagawa').setup {
-                theme = "wave",
-                transparent = true,
-                background = {
-                  dark = "wave",
-                }
-              }
-            ]],
+            require('kanagawa').setup {
+              theme = "wave",
+              transparent = true,
+              background = {
+                dark = "wave",
+              },
+              colors = {
+                theme = {
+                  all = {
+                    ui = {
+                      bg_gutter = "none",
+                    },
+                  },
+                },
+              },
+            }
+          ]],
           },
           -- TokyoNight (Transparent)
           {

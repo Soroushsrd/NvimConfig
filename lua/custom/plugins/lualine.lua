@@ -7,7 +7,7 @@ return {
     local navic = require 'nvim-navic'
     require('lualine').setup {
       options = {
-        theme = 'auto', --'pywal', -- or choose a specific theme like 'gruvbox'
+        theme = 'nightfly', --'pywal', -- or choose a specific theme like 'gruvbox'
         -- theme = {
         --   normal = { c = { fg = '#c5c8c6', bg = '#2d3640' } },
         --   insert = { c = { fg = '#ffffff', bg = '#35a770' } },
