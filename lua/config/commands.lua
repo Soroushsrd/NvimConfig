@@ -28,7 +28,7 @@ function M.setup()
 
   -- Python venv related
   vim.api.nvim_create_user_command('PythonLspInfo', function()
-    local clients = vim.lsp.get_active_clients { name = 'pyright' }
+    local clients = vim.lsp.get_clients { name = 'pyright' }
     if #clients > 0 then
       local pythonPath = clients[1].config.settings.python.pythonPath
       print('Python path: ' .. (pythonPath ~= '' and pythonPath or 'default system Python'))

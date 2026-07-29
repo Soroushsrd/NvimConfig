@@ -20,17 +20,7 @@ function M.setup()
   end
 
   -- LSP handler configs
-  local border = 'rounded'
   vim.api.nvim_set_hl(0, 'FloatBorder', { fg = '#3b4261' }) -- Adjust color as needed
-
-  vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, {
-    border = border,
-    max_width = 80,
-  })
-
-  vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-    border = border,
-  })
 
   --LSP keymaps
   vim.api.nvim_create_autocmd('LspAttach', {
@@ -96,7 +86,7 @@ function M.setup()
   -- capabilities setup
   local capabilities = vim.lsp.protocol.make_client_capabilities()
   capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
-  capabilities.offsetEncoding = { 'utf-16' }
+  -- capabilities.offsetEncoding = { 'utf-16' }
   local util = require 'lspconfig/util'
 
   local servers = {
@@ -160,9 +150,17 @@ function M.setup()
       commands = {
         ClangdSwitchSourceHeader = {
           function()
-            vim.lsp.buf.execute_command {
-              command = 'clangd.switchheader',
-            }
+            local client = vim.lsp.get_clients({ bufnr = 0, name = 'clangd' })[1]
+            if not client then
+              return
+            end
+            ---@diagnostic disable-next-line: param-type-mismatch
+            client:request('textDocument/switchSourceHeader', vim.lsp.util.make_text_document_params(0), function(err, result)
+              if err or not result then
+                return
+              end
+              vim.cmd.edit(vim.uri_to_fname(result))
+            end, 0)
           end,
           description = 'Switch between source and header file',
         },

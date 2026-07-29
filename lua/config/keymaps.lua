@@ -64,6 +64,10 @@ function M.setup()
   -- Diagnostic keymaps
   vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
   vim.keymap.set('n', '<leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>', { desc = 'Open diagnostic float' })
+  vim.keymap.set('n', 'K', function()
+    vim.lsp.buf.hover { border = 'rounded' }
+  end)
+
   -- LazyGit
   vim.keymap.set('n', '<Leader>gg', '<cmd>LazyGit<CR>', { desc = 'Open LazyGit' })
 

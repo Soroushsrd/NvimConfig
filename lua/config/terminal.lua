@@ -16,7 +16,7 @@ function _G.toggle_anvil()
     vim.cmd 'botright split'
     vim.cmd 'resize 15'
     anvil_term_id = vim.api.nvim_get_current_buf()
-    vim.fn.termopen 'anvil'
+    vim.fn.jobstart({ 'anvil' }, { term = true })
     vim.cmd 'set nobuflisted'
   else
     local win_ids = vim.fn.win_findbuf(anvil_term_id)
@@ -53,7 +53,8 @@ local function create_term()
   vim.api.nvim_win_set_buf(0, buf)
 
   -- Start terminal
-  vim.fn.termopen(vim.o.shell)
+  -- vim.fn.
+  vim.fn.jobstart({ vim.o.shell }, { term = true })
 
   -- Set up terminal-specific keymaps
   vim.api.nvim_buf_set_keymap(buf, 't', '<C-q>', '<C-\\><C-n>:lua terminal_utils.close_term()<CR>', { noremap = true, silent = true })
