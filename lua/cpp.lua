@@ -46,8 +46,10 @@ local function create_input_window(title, placeholder, callback)
 
   local win = vim.api.nvim_open_win(buf, true, opts)
 
-  vim.api.nvim_buf_set_option(buf, 'bufhidden', 'wipe')
-  vim.api.nvim_win_set_option(win, 'winhl', 'Normal:Normal')
+  vim.bo[buf].bufhidden = 'wipe'
+  vim.wo[win].winhl = 'Normal:Normal'
+  -- vim.api.nvim_buf_set_option(buf, 'bufhidden', 'wipe')
+  -- vim.api.nvim_win_set_option(win, 'winhl', 'Normal:Normal')
 
   -- Set up placeholder text using extmarks
   local ns = vim.api.nvim_create_namespace 'input_placeholder'
