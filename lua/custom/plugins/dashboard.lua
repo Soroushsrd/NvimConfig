@@ -1,44 +1,35 @@
 return {
-  'mhinz/vim-startify',
+  'folke/snacks.nvim',
+  priority = 1000,
   lazy = false,
-  priority = 100,
-  config = function()
-    -- Custom header with red coloring
-    vim.g.startify_custom_header = {
-      [[   ██████╗ ███████╗██╗    ██╗██████╗ ██╗████████╗███████╗    ██╗████████╗]],
-      [[   ██╔══██╗██╔════╝██║    ██║██╔══██╗██║╚══██╔══╝██╔════╝    ██║╚══██╔══╝]],
-      [[   ██████╔╝█████╗  ██║ █╗ ██║██████╔╝██║   ██║   █████╗      ██║   ██║   ]],
-      [[   ██╔══██╗██╔══╝  ██║███╗██║██╔══██╗██║   ██║   ██╔══╝      ██║   ██║   ]],
-      [[   ██║  ██║███████╗╚███╔███╔╝██║  ██║██║   ██║   ███████╗    ██║   ██║   ]],
-      [[   ╚═╝  ╚═╝╚══════╝ ╚══╝╚══╝ ╚═╝  ╚═╝╚═╝   ╚═╝   ╚══════╝    ╚═╝   ╚═╝   ]],
-      [[                                                                          ]],
-      [[                     ██╗███╗   ██╗    ██████╗ ██╗   ██╗███████╗████████╗ ]],
-      [[                     ██║████╗  ██║    ██╔══██╗██║   ██║██╔════╝╚══██╔══╝ ]],
-      [[                     ██║██╔██╗ ██║    ██████╔╝██║   ██║███████╗   ██║    ]],
-      [[                     ██║██║╚██╗██║    ██╔══██╗██║   ██║╚════██║   ██║    ]],
-      [[                     ██║██║ ╚████║    ██║  ██║╚██████╔╝███████║   ██║    ]],
-      [[                     ╚═╝╚═╝  ╚═══╝    ╚═╝  ╚═╝ ╚═════╝ ╚══════╝   ╚═╝    ]],
-    }
-
-    -- for i, line in ipairs(vim.g.startify_custom_header) do
-    --   vim.g.startify_custom_header[i] = '\27[38;2;255;0;0m' .. line .. '\27[0m'
-    -- end
-
-    vim.g.startify_session_dir = vim.fn.stdpath 'data' .. '/session'
-
-    vim.g.startify_bookmarks = {
-      { c = '~/.config/nvim/init.lua' },
-      { l = '~/.config/nvim/lua/plugins/init.lua' },
-      { z = '~/.zshrc' },
-    }
-
-    vim.g.startify_lists = {
-      { type = 'files', header = { '   Recent Files' } },
-      { type = 'sessions', header = { '   Sessions' } },
-      { type = 'bookmarks', header = { '   Bookmarks' } },
-    }
-
-    vim.g.startify_session_autoload = 1
-    vim.g.startify_change_to_vcs_root = 1
-  end,
+  opts = {
+    dashboard = {
+      width = 60,
+      preset = {
+        keys = {
+          { icon = '  ', key = 'f', desc = 'Find File', action = ":lua Snacks.dashboard.pick('files')" },
+          { icon = '  ', key = 'r', desc = 'Recent Files', action = ":lua Snacks.dashboard.pick('oldfiles')" },
+          { icon = '  ', key = 'c', desc = 'Config', action = ':e $MYVIMRC' },
+          { icon = '  ', key = 's', desc = 'Restore Session', action = ":lua require('persistence').load()" },
+          { icon = '  ', key = 'l', desc = 'Lazy', action = ':Lazy' },
+          { icon = '  ', key = 'q', desc = 'Quit', action = ':qa' },
+        },
+        header = [[
+          ██████╗ ███████╗██╗    ██╗██████╗ ██╗████████╗███████╗    ██╗████████╗
+          ██╔══██╗██╔════╝██║    ██║██╔══██╗██║╚══██╔══╝██╔════╝    ██║╚══██╔══╝
+          ██████╔╝█████╗  ██║ █╗ ██║██████╔╝██║   ██║   █████╗      ██║   ██║   
+          ██╔══██╗██╔══╝  ██║███╗██║██╔══██╗██║   ██║   ██╔══╝      ██║   ██║   
+          ██║  ██║███████╗╚███╔███╔╝██║  ██║██║   ██║   ███████╗    ██║   ██║   
+          ╚═╝  ╚═╝╚══════╝ ╚══╝╚══╝ ╚═╝  ╚═╝╚═╝   ╚═╝   ╚══════╝    ╚═╝   ╚═╝   
+                                                                                 
+                            ██╗███╗   ██╗    ██████╗ ██╗   ██╗███████╗████████╗ 
+                            ██║████╗  ██║    ██╔══██╗██║   ██║██╔════╝╚══██╔══╝ 
+                            ██║██╔██╗ ██║    ██████╔╝██║   ██║███████╗   ██║    
+                            ██║██║╚██╗██║    ██╔══██╗██║   ██║╚════██║   ██║    
+                            ██║██║ ╚████║    ██║  ██║╚██████╔╝███████║   ██║    
+                            ╚═╝╚═╝  ╚═══╝    ╚═╝  ╚═╝ ╚═════╝ ╚══════╝   ╚═╝    
+                            ]],
+      },
+    },
+  },
 }
