@@ -17,21 +17,36 @@ function M.setup()
       vim.bo.tabstop = 2
     end,
   })
-
   vim.api.nvim_create_autocmd('FileType', {
     pattern = { 'go', 'cpp', 'c' },
-    callback = function()
-      local is_go = vim.bo.filetype == 'go'
-      -- Use real tabs only in Go, spaces in C++
-      vim.bo.expandtab = not is_go
-      -- Set tab width to 4
-      vim.bo.tabstop = 2
-      -- Set shift width for autoindent
-      vim.bo.shiftwidth = 2
-      -- Set how many spaces a tab counts for
-      vim.bo.softtabstop = 2
+    callback = function(args)
+      if not vim.api.nvim_buf_is_valid(args.buf) then
+        return
+      end
+      vim.api.nvim_buf_call(args.buf, function()
+        local is_go = vim.bo[args.buf].filetype == 'go'
+        vim.bo[args.buf].expandtab = not is_go
+        vim.bo[args.buf].tabstop = 2
+        vim.bo[args.buf].shiftwidth = 2
+        vim.bo[args.buf].softtabstop = 2
+        vim.opt_local.cindent = true
+      end)
     end,
   })
+  -- vim.api.nvim_create_autocmd('FileType', {
+  --   pattern = { 'go', 'cpp', 'c' },
+  --   callback = function()
+  --     local is_go = vim.bo.filetype == 'go'
+  --     -- Use real tabs only in Go, spaces in C++
+  --     vim.bo.expandtab = not is_go
+  --     -- Set tab width to 4
+  --     vim.bo.tabstop = 2
+  --     -- Set shift width for autoindent
+  --     vim.bo.shiftwidth = 2
+  --     -- Set how many spaces a tab counts for
+  --     vim.bo.softtabstop = 0.2
+  --   end,
+  -- })
 
   vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
     pattern = { '*.asm', '*.nasm' },
