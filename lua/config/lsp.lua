@@ -76,6 +76,7 @@ function M.setup()
 
       -- inlay hints
       if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
+        vim.lsp.inlay_hint.enable(true, { bufnr = event.buf })
         map('<leader>th', function()
           vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
         end, '[T]oggle Inlay [H]ints')
@@ -302,7 +303,7 @@ function M.setup()
     --   },
     -- },
     ocamllsp = {
-      cmd = { 'ocamllsp' },
+      cmd = { 'opam', 'exec', '--', 'ocamllsp' },
       filetypes = { 'ocaml', 'menhir', 'ocamlinterface', 'ocamllex', 'reason', 'dune' },
       root_markers = { '*.opam', 'esy.json', 'package.json', '.git', 'dune-project', 'dune-workspace' },
       settings = {
@@ -312,7 +313,7 @@ function M.setup()
           enable = true,
           hintPatternVariables = true,
           hintLetBindings = true,
-          hintFunctionParams = true, -- This is the key one!
+          hintFunctionParams = true,
         },
         syntaxDocumentation = { enable = true },
         merlinJumpCodeActions = { enable = true },
@@ -415,19 +416,26 @@ function M.setup()
   require('mason').setup()
 
   local ensure_installed = vim.tbl_keys(servers or {})
+  ensure_installed = vim.tbl_filter(function(name)
+    return name ~= 'ocamllsp'
+  end, ensure_installed)
   vim.list_extend(ensure_installed, {
     'stylua', -- Used to format Lua code
   })
   require('mason-tool-installer').setup { ensure_installed = ensure_installed }
-  require('mason-lspconfig').setup {
-    handlers = {
-      function(server_name)
-        local server = servers[server_name] or {}
-        server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-        require('lspconfig')[server_name].setup(server)
-      end,
-    },
-  }
+
+  -- mason-lspconfig just handles installation now; config/enabling
+  -- is done via the native vim.lsp.config/vim.lsp.enable API below.
+  require('mason-lspconfig').setup {}
+
+  -- Register every server's config (works uniformly whether Mason
+  -- installs the binary or it comes from elsewhere, like opam).
+  for server_name, server_opts in pairs(servers) do
+    server_opts.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server_opts.capabilities or {})
+    vim.lsp.config(server_name, server_opts)
+  end
+
+  vim.lsp.enable(vim.tbl_keys(servers))
 end
 
 return M
