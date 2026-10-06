@@ -102,8 +102,6 @@ function M.setup()
         '--offset-encoding=utf-16',
         '--enable-config',
         '--pch-storage=memory', -- Faster PCH storage
-        '--cross-file-rename', -- Enable cross-file renaming
-        '--suggest-missing-includes', -- Suggest missing includes
         '--all-scopes-completion', -- Complete symbols from all scopes
         '--function-arg-placeholders', -- Show function argument placeholders
         '--fallback-style=LLVM', -- Fallback formatting style
@@ -115,17 +113,13 @@ function M.setup()
         fallbackFlags = { '-std=c++17' }, -- Default C++ standard
       },
       filetypes = { 'c', 'cpp', 'objc', 'objcpp', 'cuda', 'proto' },
-      root_dir = require('lspconfig').util.root_pattern(
+      root_markers = {
         '.clangd',
-        '.clang-tidy',
-        '.clang-format',
         'compile_commands.json',
         'compile_flags.txt',
-        'configure.ac',
         'CMakeLists.txt',
-        '.git'
-      ),
-      single_file_support = true,
+        '.git',
+      },
       settings = {
         clangd = {
           semanticHighlighting = true,
@@ -180,50 +174,6 @@ function M.setup()
         },
       },
     },
-    -- pyright = {
-    --   cmd = { 'pyright-langserver', '--stdio' },
-    --   filetypes = { 'python' },
-    --   root_dir = util.root_pattern('.git', 'pyproject.toml', 'setup.py', 'requirements.txt', '.venv', 'venv'),
-    --   settings = {
-    --     python = {
-    --       analysis = {
-    --         autoSearchPaths = true,
-    --         useLibraryCodeForTypes = true,
-    --         diagnosticMode = 'workspace',
-    --         typeCheckingMode = 'basic',
-    --         extraPaths = {},
-    --       },
-    --       pythonPath = '', -- This will use the default Python path
-    --     },
-    --   },
-    --   on_init = function(client)
-    --     -- Dynamically determine Python path when the LSP initializes
-    --     local function get_python_path()
-    --       local poetry_path = vim.fn.trim(vim.fn.system 'poetry env info --path 2>/dev/null')
-    --       if poetry_path ~= '' and vim.v.shell_error == 0 then
-    --         return poetry_path .. '/bin/python'
-    --       end
-    --
-    --       local venv_paths = {
-    --         vim.fn.getcwd() .. '/.venv',
-    --         vim.fn.getcwd() .. '/venv',
-    --         vim.fn.getcwd() .. '/env',
-    --       }
-    --
-    --       for _, path in ipairs(venv_paths) do
-    --         if vim.fn.isdirectory(path) == 1 then
-    --           return path .. '/bin/python'
-    --         end
-    --       end
-    --
-    --       return vim.fn.exepath 'python'
-    --     end
-    --
-    --     client.config.settings.python.pythonPath = get_python_path()
-    --     client:notify('workspace/didChangeConfiguration', { settings = client.config.settings })
-    --   end,
-    --   single_file_support = true,
-    -- },
     biome = {
       cmd = { 'biome', 'lsp-proxy' },
       filetypes = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'json', 'html' },
@@ -262,46 +212,6 @@ function M.setup()
         },
       },
     },
-    -- gopls = {
-    --   cmd = { 'gopls' },
-    --   filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
-    --   settings = {
-    --     gopls = {
-    --       gofumpt = true,
-    --       codelenses = {
-    --         gc_details = false,
-    --         generate = true,
-    --         regenerate_cgo = true,
-    --         run_govulncheck = true,
-    --         test = true,
-    --         tidy = true,
-    --         upgrade_dependency = true,
-    --         vendor = true,
-    --       },
-    --       hints = {
-    --         assignVariableTypes = true,
-    --         compositeLiteralFields = true,
-    --         compositeLiteralTypes = true,
-    --         constantValues = true,
-    --         functionTypeParameters = true,
-    --         parameterNames = true,
-    --         rangeVariableTypes = true,
-    --       },
-    --       analyses = {
-    --         fieldalignment = true,
-    --         nilness = true,
-    --         unusedparams = true,
-    --         unusedwrite = true,
-    --         useany = true,
-    --       },
-    --       usePlaceholders = true,
-    --       completeUnimported = true,
-    --       staticcheck = true,
-    --       directoryFilters = { '-.git', '-.vscode', '-.idea', '-.vscode-test', '-node_modules' },
-    --       semanticTokens = true,
-    --     },
-    --   },
-    -- },
     ocamllsp = {
       cmd = { 'opam', 'exec', '--', 'ocamllsp' },
       filetypes = { 'ocaml', 'menhir', 'ocamlinterface', 'ocamllex', 'reason', 'dune' },

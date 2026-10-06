@@ -85,7 +85,10 @@ function M.setup()
   --Bufferline
   -- Keymaps for bufferline navigation
   vim.keymap.set('n', '<leader>bp', ':BufferLinePick<CR>', { silent = true, desc = 'Pick Buffer' })
-  vim.keymap.set('n', '<leader>bd', ':bdelete<CR>', { silent = true, desc = 'Close Buffer' })
+  -- Snacks.bufdelete swaps each window to another buffer before deleting, so splits stay intact
+  vim.keymap.set('n', '<leader>bd', function()
+    Snacks.bufdelete()
+  end, { desc = 'Close Buffer' })
 
   -- snacks picker
   vim.keymap.set('n', '<leader>sh', function()

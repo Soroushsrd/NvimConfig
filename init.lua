@@ -5,13 +5,13 @@ vim.cmd 'colorscheme spaceduck'
 --   highlight NonText guibg=NONE ctermbg=NONE
 -- ]]
 
-vim.g.neovide_opacity = 0.90
+vim.g.neovide_opacity = 0.95
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 vim.g.have_nerd_font = true
 
--- vim.o.guifont = 'JetBrainsMono NFM SemiBold:h12'
-vim.o.guifont = 'CaskaydiaCove Nerd Font Propo:h12'
+vim.o.guifont = 'JetBrainsMono NFM SemiBold:h13'
+-- vim.o.guifont = 'CaskaydiaCove Nerd Font Propo:h12'
 -- vim.o.guifont = 'FiraCode Nerd Font:h12'
 
 -- Set NotifyBackground highlight group
@@ -177,6 +177,7 @@ require('config.keymaps').setup()
 require('config.autocmds').setup()
 require('config.commands').setup()
 require('config.terminal').setup()
+require('config.session').setup()
 require('config.lsp').setup()
 require('cpp').setup {
   keymaps = {

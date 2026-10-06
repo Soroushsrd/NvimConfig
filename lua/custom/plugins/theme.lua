@@ -3,15 +3,14 @@ return {
   { 'loctvl842/monokai-pro.nvim' },
   { 'EdenEast/nightfox.nvim' },
   { 'ricardoraposo/gruvbox-minor.nvim' },
-  { 'sainnhe/everforest' },
   { 'sainnhe/gruvbox-material' },
   { 'morhetz/gruvbox', name = 'gruvbox' },
   { 'folke/tokyonight.nvim' },
-  { 'catppuccin/nvim', name = 'catppuccin' },
   { 'scottmckendry/cyberdream.nvim', name = 'cyberdream' },
-  { 'rose-pine/neovim', name = 'rose-pine' },
   { 'rebelot/kanagawa.nvim', name = 'kanagawa' },
   { 'luisiacc/gruvbox-baby', name = 'gruvbox-baby' },
+  { 'spaceduck-theme/nvim', name = 'spaceduck' },
+  { 'maxmx03/solarized.nvim', name = 'solarized' },
 
   -- Themery itself
   {
@@ -21,76 +20,16 @@ return {
     config = function()
       require('themery').setup {
         themes = {
-          {
-            name = 'SpaceDark',
-            colorscheme = 'spacedark',
-          },
-          {
-            name = 'Ayu',
-            colorscheme = 'ayu',
-          },
-          {
-            name = 'Glacier',
-            colorscheme = 'glacier',
-          },
-          {
-            name = 'Seadark',
-            colorscheme = 'seadark',
-          },
-          {
-            name = 'Lucid',
-            colorscheme = 'lucid',
-          },
-          {
-            name = 'TicToc',
-            colorscheme = 'tictoc',
-          },
-          {
-            name = 'SpaceDuck',
-            colorscheme = 'spaceduck',
-          },
-          {
-            name = 'Gruvbox',
-            colorscheme = 'gruvbox',
-          },
-          {
-            name = 'Iceberg',
-            colorscheme = 'iceberg',
-          },
-          {
-            name = 'Memoonry',
-            colorscheme = 'memoonry',
-          },
-
-          -- Everforest
-          {
-            name = 'Everforest',
-            colorscheme = 'everforest',
-            before = [[
-              vim.o.termguicolors = true
-              vim.g.everforest_enable_italic = true
-              vim.g.everforest_dim_inactive_windows = 0
-              vim.g.everforest_background = 'soft'
-              vim.g.everforest_transparent_background = 0
-              vim.g.everforest_cursor = 'green'
-              vim.g.everforest_better_performance = 1
-              vim.g.everforest_inlay_hints_background = 'dimmed'
-            ]],
-            after = [[
-              vim.o.background = 'light'
-            ]],
-          },
-
           --- Gruvbox
           {
             name = 'Gruvbox',
             colorscheme = 'gruvbox',
             before = [[
-              vim.g.gruvbox_transparent_background = 1
-              vim.g.gruvbox_background = 'soft'
-            ]],
-            after = [[
               vim.o.background = 'light'
+              vim.g.gruvbox_italic = 1
+              vim.g.gruvbox_bold = 1
+              vim.g.gruvbox_transparent_bg = 1
+              vim.g.gruvbox_contrast_light = 'soft'
             ]],
           },
           -- Gruvbox Material
@@ -109,21 +48,6 @@ return {
             after = [[
               vim.o.background = 'dark'
             ]],
-          },
-
-          -- Rosepine
-          {
-            name = 'Rose-pine',
-            colorscheme = 'rose-pine',
-            before = [[
-            require('rose-pine').setup({
-              variant = "main",
-              styles = {
-                bold = true,
-                italic = true,
-              }
-            })
-          ]],
           },
           -- Monokai Pro (Classic, Transparent)
           {
@@ -154,7 +78,6 @@ return {
               })
             ]],
           },
-
           -- Nightfox: Duskfox (Transparent)
           {
             name = 'Duskfox',
@@ -234,21 +157,25 @@ return {
               vim.cmd.hi 'TelescopeResultsBorder guibg=NONE'
             ]],
           },
-
-          -- Catppuccin Mocha (Transparent)
           {
-            name = 'Catppuccin Mocha',
-            colorscheme = 'catppuccin',
+            name = 'solarized',
+            colorscheme = 'solarized',
             before = [[
-              require('catppuccin').setup {
-                flavour = 'mocha',
-                transparent_background = false,
-                dim_inactive = {
-                  enabled = false,
-                  shade = 'dark',
-                  percentage = 0.4,
+              require('solarized').setup {
+                variant = 'autumn',
+                styles = {
+                  comments = { italic = true },
+                  keywords = { bold = true },
+                  functions = { bold = true },
+                  types = { italic = true },
+                  parameters = { italic = true },
+                  statements = { bold = true },
                 },
               }
+            ]],
+            after = [[
+              vim.o.background = 'light'
+              vim.o.termguicolors = true
             ]],
           },
         },
