@@ -3,6 +3,8 @@ return {
   priority = 1000,
   lazy = false,
   opts = {
+    picker = { enabled = true },
+    notifier = { enabled = true },
     dashboard = {
       width = 60,
       preset = {

@@ -31,17 +31,17 @@ function M.setup()
         vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
       end
 
-      map('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
+      map('gd', Snacks.picker.lsp_definitions, '[G]oto [D]efinition')
 
-      map('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
+      map('gr', Snacks.picker.lsp_references, '[G]oto [R]eferences')
 
-      map('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
+      map('gI', Snacks.picker.lsp_implementations, '[G]oto [I]mplementation')
 
-      map('<leader>D', require('telescope.builtin').lsp_type_definitions, 'Type [D]efinition')
+      map('<leader>D', Snacks.picker.lsp_type_definitions, 'Type [D]efinition')
 
-      map('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
+      map('<leader>ds', Snacks.picker.lsp_symbols, '[D]ocument [S]ymbols')
 
-      map('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+      map('<leader>ws', Snacks.picker.lsp_workspace_symbols, '[W]orkspace [S]ymbols')
 
       map('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
 
@@ -411,7 +411,6 @@ function M.setup()
       },
     },
   }
-  vim.keymap.set('n', '<space>f', vim.lsp.buf.format)
 
   require('mason').setup()
 

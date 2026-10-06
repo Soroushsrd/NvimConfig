@@ -9,6 +9,10 @@ return {
     messages = {
       enabled = true,
     },
+    -- let snacks.notifier handle vim.notify
+    notify = {
+      enabled = false,
+    },
     views = {
       notify = {
         replace = true,
@@ -52,22 +56,9 @@ return {
   },
   dependencies = {
     -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
-    'muniftanjim/nui.nvim',
-    -- optional:
-    --   `nvim-notify` is only needed, if you want to use the notification view.
-    --   if not available, we use `mini` as the fallback
-    {
-      'rcarriga/nvim-notify',
-      config = function()
-        require('notify').setup {
-          background_colour = '#000000', -- Set explicit background
-          -- background_colour = '#1a1a1a', -- match your terminal bg
-          -- or try:
-          -- background_colour = 'Normal', -- Use Normal highlight group
-          merge_duplicates = true,
-        }
-      end,
-    },
+    'MunifTanjim/nui.nvim',
+    -- notifications are rendered by snacks.notifier (see dashboard.lua)
+    'folke/snacks.nvim',
   },
 
   config = function(_, opts)

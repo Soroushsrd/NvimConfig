@@ -3,6 +3,5 @@
 --
 -- See the kickstart.nvim README for more information
 return {
-  -- { 'wakatime/vim-wakatime', lazy = false },
   { 'shirk/vim-gas' },
 }
