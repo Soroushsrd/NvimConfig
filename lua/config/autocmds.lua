@@ -1,5 +1,26 @@
 local M = {}
 function M.setup()
+  -- 'scrolloff' stops working at the end of the buffer, so scroll past EOF to keep the margin
+  vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI', 'WinResized' }, {
+    desc = 'Keep scrolloff margin below the cursor at end of buffer',
+    group = vim.api.nvim_create_augroup('scroll-past-eof', { clear = true }),
+    callback = function()
+      if vim.bo.buftype ~= '' or vim.api.nvim_win_get_config(0).relative ~= '' then
+        return
+      end
+      local height = vim.api.nvim_win_get_height(0)
+      local so = vim.wo.scrolloff >= 0 and vim.wo.scrolloff or vim.go.scrolloff
+      local margin = math.min(so, math.floor((height - 1) / 2))
+      local below = height - vim.fn.winline()
+      if below >= margin then
+        return
+      end
+      local view = vim.fn.winsaveview()
+      view.topline = math.min(view.topline + margin - below, vim.fn.line '$')
+      vim.fn.winrestview { topline = view.topline }
+    end,
+  })
+
   vim.api.nvim_create_autocmd('TextYankPost', {
     desc = 'Highlight when yanking (copying) text',
     group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
