@@ -42,8 +42,9 @@ end
 local function create_term()
   -- Create new split
   vim.cmd 'split'
-  -- Resize to reasonable height (adjust the number as needed)
-  vim.cmd 'resize 10'
+  -- Neovide gets ~35% of the editor height; elsewhere keep the fixed 10 rows
+  local height = vim.g.neovide and math.floor(vim.o.lines * 0.35) or 10
+  vim.cmd('resize ' .. height)
 
   -- Create and set up terminal buffer
   local buf = vim.api.nvim_create_buf(false, true)
