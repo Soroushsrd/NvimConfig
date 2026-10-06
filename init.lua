@@ -23,6 +23,14 @@ if vim.g.neovide then
   vim.g.neovide_padding_left = 0
   vim.g.neovide_hide_mouse_when_typing = true
   vim.g.experimental_layer_grouping = true
+
+  -- Neovide has no terminal emulator handling Ctrl+Shift+C/V, so map them ourselves
+  vim.keymap.set('x', '<C-S-c>', '"+y', { desc = 'Copy to system clipboard' })
+  vim.keymap.set({ 'n', 'x' }, '<C-S-v>', '"+P', { desc = 'Paste from system clipboard' })
+  vim.keymap.set({ 'i', 'c' }, '<C-S-v>', '<C-r><C-o>+', { desc = 'Paste from system clipboard' })
+  vim.keymap.set('t', '<C-S-v>', function()
+    vim.api.nvim_chan_send(vim.b.terminal_job_id, vim.fn.getreg '+')
+  end, { desc = 'Paste from system clipboard' })
 end
 
 vim.opt.number = true
