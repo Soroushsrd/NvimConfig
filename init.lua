@@ -17,10 +17,10 @@ vim.o.guifont = 'JetBrainsMono NFM SemiBold:h13'
 -- Set NotifyBackground highlight group
 if vim.g.neovide then
   vim.g.neovide_fullscreen = false
-  vim.g.neovide_padding_top = 0
-  vim.g.neovide_padding_bottom = 0
-  vim.g.neovide_padding_right = 0
-  vim.g.neovide_padding_left = 0
+  -- vim.g.neovide_padding_top = 0
+  -- vim.g.neovide_padding_bottom = 0
+  -- vim.g.neovide_padding_right = 0
+  -- vim.g.neovide_padding_left = 0
   vim.g.neovide_hide_mouse_when_typing = true
   vim.g.experimental_layer_grouping = true
 
