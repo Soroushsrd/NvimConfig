@@ -4,9 +4,7 @@ local M = {}
 function M.setup()
   -- diagnostic config
   vim.diagnostic.config {
-    virtual_text = {
-      virt_text_pos = 'eol',
-    },
+    virtual_text = false,
   }
 
   -- diagnostic signs
